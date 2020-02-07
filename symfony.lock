@@ -90,6 +90,9 @@
     "php": {
         "version": "7.2"
     },
+    "phpmailer/phpmailer": {
+        "version": "v6.1.4"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
