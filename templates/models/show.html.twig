@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Models{% endblock %}
+
+{% block body %}
+    <h1>Models</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ model.id }}</td>
+            </tr>
+            <tr>
+                <th>Maker</th>
+                <td>{{ model.maker }}</td>
+            </tr>
+            <tr>
+                <th>Model</th>
+                <td>{{ model.model }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('models_index') }}">back to list</a>
+
+    <a href="{{ path('models_edit', {'id': model.id}) }}">edit</a>
+
+    {{ include('models/_delete_form.html.twig') }}
+{% endblock %}

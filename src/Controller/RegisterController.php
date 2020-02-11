@@ -3,7 +3,6 @@
 namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use PHPMailer\PHPMailer\PHPMailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -18,7 +17,7 @@ class RegisterController extends AbstractController {
 	/**
 	 * @Route("/register", name="register")
 	 */
-	public function register(Request $request, UserPasswordEncoderInterface $encoder, UserRepository $userRepository): Response{
+	public function register(Request $request, UserPasswordEncoderInterface $encoder, UserRepository $userRepository, \Swift_Mailer $mailer): Response{
 		$form = $this->createFormBuilder()
 			->add('username', TextType::class)
 			->add('email', TextType::class)
@@ -42,47 +41,32 @@ class RegisterController extends AbstractController {
 					'message' => 'Username already exist, choose another',
 				]);
 			} else {
+				$hash = hash('sha256', $form->getData()['username']);
+				$message = (new \Swift_Message('Wellcome to SymfBook'))
+					->setFrom('aleksandarskrobic@gmail.com')
+					->setTo($form->getData()['email'])
+					->setBody(
+						$this->renderView(
+							// templates/emails/registration.html.twig
+							'emails/registration.html.twig',
+							['hash' => $hash,
+								'name' => $form->getData()['username']]
+						),
+						'text/html'
+					);
+
+				$mailer->send($message);
 
 				$user = new User;
 				$user->setUsername($form->getData()['username']);
-				$user->setEmail($form->getData()['email']);
+
+				$user->setAuthenticated($hash);
 				$user->setPassword($encoder->encodePassword($user, $form->getData()['password']));
+				$user->setEmail($form->getData()['email']);
 				$em = $this->getDoctrine()->getManager();
-
-				$mail = new PHPMailer();
-
-				$mail->IsSMTP(); // telling the class to use SMTP
-				$mail->Host = "smtp.gmail.com"; // SMTP server
-				$mail->SMTPDebug = 2; // enables SMTP debug information (for testing)
-				// 1 = errors and messages
-				// 2 = messages only
-				$mail->SMTPAuth = true; // enable SMTP authentication
-				$mail->SMTPSecure = "tls";
-				$mail->Host = "smtp.gmail.com"; // SMTP server
-				$mail->Port = 587; // SMTP port
-				$mail->Username = "askrobic@gmail.com"; // username
-				$mail->Password = "Gmejl1984!"; // password
-
-				$mail->SetFrom('askrobic@gmail.com', 'Test');
-
-				$mail->Subject = "I hope this works!";
-
-				$mail->MsgHTML('Blah');
-
-				$address = "askrobic@gmail.com";
-				$mail->AddAddress($address, "Test");
-
-				if (!$mail->Send()) {
-					echo "Mailer Error: " . $mail->ErrorInfo;
-				} else {
-					echo "Message sent!";
-				}
-				die;
 
 				$em->persist($user);
 				$em->flush();
-				//php mailer
-
 				return $this->redirectToRoute('app_login');
 			}
 
@@ -91,6 +75,105 @@ class RegisterController extends AbstractController {
 		return $this->render('register/index.html.twig', [
 			'form' => $form->createView(),
 			'message' => 'Register',
+		]);
+	}
+
+	/**
+	 * @Route("/register/{hash}", name="confirmation")
+	 */
+	public function confirmation($hash, UserRepository $userRepository) {
+		// $user = new User;
+		if ($user = $userRepository->findOneBy(['authenticated' => $hash])) {
+
+			$em = $this->getDoctrine()->getManager();
+			$user->setAuthenticated('ok');
+			$em->persist($user);
+			$em->flush();
+			return $this->redirectToRoute('app_login');
+		} else {
+			return $this->redirectToRoute('app_login');
+		}
+
+	}
+	/**
+	 * @Route("/forgot", name="password_forgotten")
+	 */
+	public function forgot(Request $request, UserRepository $userRepository, \Swift_Mailer $mailer) {
+
+		$form = $this->createFormBuilder()
+			->add('reset', TextType::class)
+			->add('button', SubmitType::class, ['label' => 'Reset'])
+			->getForm();
+
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted()) {
+			$user = new User;
+			$user = $userRepository->findOneBy(['username' => $form->getData()['reset']]);
+			$hash = rand(100000000, 999999999);
+			$user->setAuthenticated($hash);
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($user);
+			$em->flush();
+
+			$message = (new \Swift_Message('Password restart'))
+				->setFrom('aleksandarskrobic@gmail.com')
+				->setTo($user->getEmail())
+				->setBody(
+					$this->renderView(
+						'emails/reset.html.twig',
+						['hash' => $hash,
+							'name' => $user->getUsername()]
+					),
+					'text/html'
+				);
+			$mailer->send($message);
+			return $this->redirectToRoute('app_login');
+		}
+
+		return $this->render('register/forgot.html.twig', [
+			'form' => $form->createView(),
+			'message' => 'Reset your password',
+		]);
+	}
+
+	/**
+	 * @Route("/reset/{hash?}", name="password_reset")
+	 */
+	public function reset($hash, UserRepository $userRepository, Request $request, UserPasswordEncoderInterface $encoder) {
+		$user = new User;
+		if ($hash) {
+			$user = $userRepository->findOneBy(['authenticated' => $hash]);
+		} else {
+			$user = $this->getUser();
+		}
+
+		$form = $this->createFormBuilder()
+			->add('password', RepeatedType::class, [
+				'type' => PasswordType::class,
+				'invalid_message' => 'The password fields must match.',
+				'options' => ['attr' => ['class' => 'password-field']],
+				'required' => true,
+				'first_options' => ['label' => 'Password'],
+				'second_options' => ['label' => 'Repeat Password'],
+			])
+			->add('change', SubmitType::class, ['label' => 'Change'])
+			->getForm();
+
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($user);
+			$user->setPassword($encoder->encodePassword($user, $form->getData()['password']));
+			$user->setAuthenticated('ok');
+			$em->flush();
+			return $this->redirectToRoute('home');
+		}
+
+		return $this->render('register/reset.html.twig', [
+			'form' => $form->createView(),
+			'message' => 'Reset your password',
 		]);
 	}
 }

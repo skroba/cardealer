@@ -61,10 +61,13 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
 		}
 
 		$user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
-
 		if (!$user) {
 			// fail authentication with a custom error
 			throw new CustomUserMessageAuthenticationException('Username could not be found.');
+		}
+		if ($user->getAuthenticated() != 'ok') {
+			// fail authentication with a custom error
+			throw new CustomUserMessageAuthenticationException('Please confirm via email registration.');
 		}
 
 		return $user;
@@ -88,7 +91,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
 
 		// For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
 		// throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
-		return new RedirectResponse($this->urlGenerator->generate('addresses_index'));
+		return new RedirectResponse($this->urlGenerator->generate('home'));
 	}
 
 	protected function getLoginUrl() {

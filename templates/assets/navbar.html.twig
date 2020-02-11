@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{{ path('home') }}">SymfBook</a>
+  <a class="navbar-brand" href="{{ path('home') }}">CarDealer</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -8,7 +8,10 @@
     <ul class="navbar-nav mr-auto">
        {% if app.user %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ path('addresses_new') }}">Create</a>
+        <a class="nav-link" href="{{ path('ads_new') }}">Create</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="{{ path('models_new') }}">New car</a>
       </li>
       {% endif %}
       {% if app.user %}
@@ -18,7 +21,7 @@
         </a>
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="{{ path('password_reset') }}">Change password</a>
               <a class="dropdown-item" href="#">Another action</a>
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
@@ -33,11 +36,6 @@
         </li>
       {% endif %}
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="http://localhost/symfbook/public/index.php/addresses/search" name="form" method="post">
-      <input required class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="form_search" name="form[search]">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      <input type="hidden" id="form__token" name="form[_token]" value="{{ csrf_token('form') }}" />
-    </form>
   </div>
 </nav>
 

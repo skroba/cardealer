@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Address</th>
@@ -18,14 +17,13 @@
         <tbody>
         {% for address in addresses %}
             <tr>
-                <td>{{ address.id }}</td>
                 <td>{{ address.name }}</td>
                 <td>{{ address.surname }}</td>
                 <td>{{ address.address }}</td>
                 <td>
-                    <a href="{{ path('addresses_show', {'id': address.id}) }}">show</a>
-                    <a href="{{ path('addresses_edit', {'id': address.id}) }}">edit</a>
-                </td>
+                        <a class="btn btn-success" href="{{ path('addresses_show', {'id': address.id}) }}">show</a>
+                        <a class="btn btn-warning" href="{{ path('addresses_edit', {'id': address.id}) }}">edit</a>
+                    </td>
             </tr>
         {% else %}
             <tr>

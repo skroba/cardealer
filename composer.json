@@ -5,6 +5,8 @@
         "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "fzaninotto/faker": "^1.9",
+        "intervention/image": "^2.5",
         "phpmailer/phpmailer": "^6.1",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/console": "5.0.*",
@@ -15,6 +17,7 @@
         "symfony/orm-pack": "^1.0",
         "symfony/security-bundle": "5.0.*",
         "symfony/security-csrf": "5.0.*",
+        "symfony/swiftmailer-bundle": "^3.4",
         "symfony/twig-bundle": "5.0.*",
         "symfony/validator": "5.0.*",
         "symfony/yaml": "5.0.*"

@@ -22,7 +22,7 @@
 	            </tr>
 	        </thead>
 	        <tbody>
-	        {% for address in data|slice(0 + pagination, 3) %}
+	        {% for address in data|slice(0 + pagination, 5) %}
 	            <tr>
 	                <td>{{ address.name }}</td>
 	                <td>{{ address.surname }}</td>
@@ -47,10 +47,10 @@
 
 
 	<div class="d-flex justify-content-center">
-		{% if query is defined and data|length > 3  %}
-			{% for i in 1..((data|length) / 3) | round(0, 'ceil') %}
+		{% if query is defined and data|length > 5  %}
+			{% for i in 1..((data|length) / 5) | round(0, 'ceil') %}
 			{% if i >= 1 and data|length > 0 %}
-		 		<a class="btn btn-info px-3" href="{{ path('search', {'query':query,'pagination': i * 3 - 3 }) }}">{{i}}</a>
+		 		<a class="btn btn-info px-3" href="{{ path('search', {'query':query,'pagination': i * 5 - 5 }) }}">{{i}}</a>
 		 	{% endif %}
 			{% endfor %}
 		{% endif %}
