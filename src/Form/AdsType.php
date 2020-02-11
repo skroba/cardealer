@@ -65,20 +65,19 @@ class AdsType extends AbstractType {
 				],
 			])
 			->add('about')
-			->add('contact', FileType::class, [
-				'multiple' => true,
-				'attr' => [
-					'accept' => 'image/*',
-					'multiple' => 'multiple',
-				],
-			]);
+			->add('contact', ChoiceType::class, [
+				'label' => 'Choose user',
+				'choices' => $options['user'],
 
+			])
+		;
 	}
 
 	public function configureOptions(OptionsResolver $resolver) {
 		$resolver->setDefaults([
 			'data_class' => Ads::class,
 			'model' => null,
+			'user' => null,
 		]);
 	}
 }

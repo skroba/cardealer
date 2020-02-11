@@ -37,7 +37,7 @@ class AdsController extends AbstractController {
 			$model = array_merge($model, $c);
 		}
 		ksort($model);
-		$form = $this->createForm(AdsType::class, $ad, ['model' => $model]);
+		$form = $this->createForm(AdsType::class, $ad, ['model' => $model, 'user' => array_flip([$this->getUser()->getId()])]);
 
 		$form->handleRequest($request);
 
@@ -59,7 +59,7 @@ class AdsController extends AbstractController {
 
 			}
 			$ad->setPictures($imgjson);
-			$ad->setContact($imgjson);
+			$ad->setContact('1');
 
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($ad);

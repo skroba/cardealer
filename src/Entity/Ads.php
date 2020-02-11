@@ -71,9 +71,9 @@ class Ads {
 	private $door;
 
 	/**
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="string")
 	 */
-	private $contact = [];
+	private $contact;
 
 	public function getId():  ? int {
 		return $this->id;
@@ -191,12 +191,11 @@ class Ads {
 		return $this;
 	}
 
-	public function getContact():  ? array
-	{
+	public function getContact():  ? string {
 		return $this->contact;
 	}
 
-	public function setContact(array $contact) : self{
+	public function setContact(string $contact) : self{
 		$this->contact = $contact;
 
 		return $this;
