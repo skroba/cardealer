@@ -28,6 +28,26 @@ class AdsController extends AbstractController {
 	}
 
 	/**
+	 * @Route("/search", name="search", methods={"POST"})
+	 */
+	public function search(AdsRepository $adsRepository, Request $request, ModelsRepository $modelsRepository): Response{
+
+		$request = Request::createFromGlobals();
+
+		$query = $request->request->all();
+		foreach ($query as $key => $value) {
+			if ($value == "") {
+				unset($query[$key]);}
+
+		}
+
+		return $this->render('ads/index.html.twig', [
+			'ads' => $adsRepository->findBy($query),
+			'models' => $modelsRepository->findAll(),
+		]);
+	}
+
+	/**
 	 * @Route("/new", name="ads_new", methods={"GET","POST"})
 	 */
 	public function new (Request $request, ModelsRepository $modelsRepository): Response{
@@ -44,6 +64,7 @@ class AdsController extends AbstractController {
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
+			dump($ad);die;
 
 			$date = new DateTime();
 
@@ -65,6 +86,7 @@ class AdsController extends AbstractController {
 			$ad->setPictures($imgjson);
 			$ad->setContact($this->getUser()->getId());
 			$ad->setAdded($folder);
+			dump($ad);die;
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($ad);
 			$entityManager->flush();

@@ -11,6 +11,8 @@ equpment()
 about()
 door(2/3, 4/5)
 contact(name, telephone, city)
+miles
+
 
 
 maker
@@ -51,4 +53,34 @@ function getState(val) {
   }
   });
 }
-</script><
+</script>
+
+http://localhost/cardealer/public/index.php/ads/?
+maker=18
+&yearfrom=First+registation
+&yearto=to
+&kilometers=
+&model=+a2
+&body=
+&door=4%2F5
+&price=
+&fuel=
+
+$request->request->all()
+
+ <script>
+function getModels(val) {
+  $.ajax({
+  type: "GET",
+  url: "/cardealer/public/index.php/models/api/" +val,
+  data:'model='+val,
+  success: function(data){
+    $("#model").html(data);
+
+  }
+  });
+}
+</script>
+
+
+ onChange="getModels(this.value);"

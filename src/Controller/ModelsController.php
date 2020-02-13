@@ -56,13 +56,13 @@ class ModelsController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/api/{id}", name="models_api", methods={"GET"})
+	 * @Route("/api/{maker}", name="models_api", methods={"GET"})
 	 */
-	public function api($id, ModelsRepository $modelsRepository) {
-		$model = $modelsRepository->findBy(['id' => $id]);
+	public function api($maker, ModelsRepository $modelsRepository) {
+		$model = $modelsRepository->findBy(['maker' => $maker]);
 		$ar = explode(',', $model[0]->getModel());
 		sort($ar);
-		$data = '';
+		$data = '<option value=""><h1>Chose</h1></option>';
 		foreach ($ar as $key) {
 			$data .= '<option value="' . $key . '"><h1>' . $key . '</h1></option>';
 		}

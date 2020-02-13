@@ -17,7 +17,11 @@ class AdsType extends AbstractType {
 				'label' => 'Choose model',
 				'choices' => $options['model'],
 			])
-			->add('model', ChoiceType::class)
+			->add('model', ChoiceType::class, [
+				'choices' => [
+					'model' => '',
+				],
+			])
 			->add('fuel', ChoiceType::class, [
 				'choices' => [
 					'gasoline' => 'gasoline',
@@ -28,6 +32,13 @@ class AdsType extends AbstractType {
 				],
 			])
 			->add('volume')
+			->add('mileage')
+			->add('gearchange', ChoiceType::class, [
+				'choices' => [
+					'manual' => 'manual',
+					'automatic' => 'automatic',
+				],
+			])
 			->add('price')
 			->add('year')
 			->add('door', ChoiceType::class, [

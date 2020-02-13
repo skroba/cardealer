@@ -1,13 +1,14 @@
 
-<form action="" type>
+<form action="/cardealer/public/index.php/ads/search" method="POST">
   <div class="row my-2">
 
   <div class="col-4">
      <div class="form-group">
-      <select id="maker" class="form-control" name="maker"" onChange="getModels(this.value);">
+      <select id="maker" class="form-control" name="maker""
+       onChange="getModels(this.value);" onchange="location.reload()">
         <option value="">Make</option>
                 {% for make in models %}
-        <option value="{{ make.id }}">{{ make.maker }}</option>
+        <option value="{{ make.maker }}">{{ make.maker }}</option>
         {% endfor %}
       </select>
     </div>
@@ -15,27 +16,34 @@
     <div class="row">
 
       <div class="col-6"><div class="form-group">
-      <select id="yearfrom" class="form-control" name="yearfrom">
-        <option>First registation</option>
+      <select id="year" class="form-control" name="year">
+        <option value="">1934</option>
         {% for i in range(2020, 1935) %}
-            <option>{{i}}</option>
+            <option value =" >= {{i}}">{{i}}</option>
         {% endfor %}
       </select>
     </div>
     </div>
       <div class="col-6"><div class="form-group">
-      <select id="yearto" class="form-control" name="yearto">
-        <option>to</option>
+      <select id="year" class="form-control" name="year">
+        <option value="">2020</option>
               {% for i in range(2020, 1935) %}
-            <option>{{i}}</option>
+            <option value=" <= {{i}}">{{i}}</option>
         {% endfor %}
       </select>
     </div></div>
 
     </div>
      <div class="form-group">
-      <input id="kilometers" class="form-control" value="" placeholder="Kilometers under" name="kilometers">
-      </input>
+      <select id="mileage" class="form-control" name="mileage">
+        <option value="">Miles under</option>
+        <option value="<=50000">50000</option>
+        <option value="<=100000">100000</option>
+        <option value="<=150000">150000</option>
+        <option value="<=200000">200000</option>
+        <option value="<=250000">250000</option>
+        <option value="<=300000">300000</option>
+      </select>
     </div>
   </div>
 
@@ -86,7 +94,7 @@
     </div>
     <div class="form-group">
       <select id="fuel" class="form-control" name="fuel">
-        <option value="">Fuel</option>
+        <option value>Fuel</option>
         <option value="gasoline">Gasoline</option>
         <option value="diesel">Diesel</option>
         <option value="lpg">LPG</option>
