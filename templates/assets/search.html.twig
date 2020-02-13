@@ -1,0 +1,100 @@
+
+<form action="" type>
+  <div class="row my-2">
+
+  <div class="col-4">
+     <div class="form-group">
+      <select id="maker" class="form-control" name="maker"" onChange="getModels(this.value);">
+        <option value="">Make</option>
+                {% for make in models %}
+        <option value="{{ make.id }}">{{ make.maker }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="row">
+
+      <div class="col-6"><div class="form-group">
+      <select id="yearfrom" class="form-control" name="yearfrom">
+        <option>First registation</option>
+        {% for i in range(2020, 1935) %}
+            <option>{{i}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    </div>
+      <div class="col-6"><div class="form-group">
+      <select id="yearto" class="form-control" name="yearto">
+        <option>to</option>
+              {% for i in range(2020, 1935) %}
+            <option>{{i}}</option>
+        {% endfor %}
+      </select>
+    </div></div>
+
+    </div>
+     <div class="form-group">
+      <input id="kilometers" class="form-control" value="" placeholder="Kilometers under" name="kilometers">
+      </input>
+    </div>
+  </div>
+
+
+  <div class="col-4">
+     <div class="form-group">
+      <select id="model" class="form-control" name="model">
+        <option value="">Model</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select id="body" class="form-control" name="body">
+        <option value="">Body</option>
+        <option value="hatchback">Hatchback</option>
+        <option value="estate">Estate</option>
+        <option value="limousine">Limousine</option>
+        <option value="cabrio">Cabrio</option>
+        <option value="suv">Suv</option>
+      </select>
+    </div>
+      <div class="row">
+        <div class="col-4"><div class="form-check">
+  <input class="form-check-input" type="radio" name="door" id="door" value="" checked>
+  <label class="form-check-label" for="exampleRadios1">
+    Door
+  </label>
+</div></div>
+        <div class="col-4"><div class="form-check">
+  <input class="form-check-input" type="radio" name="door" id="door" value="2/3">
+  <label class="form-check-label" for="exampleRadios1">
+    2/3 Door
+  </label>
+</div></div>
+        <div class="col-4"><div class="form-check">
+  <input class="form-check-input" type="radio" name="door" id="door" value="4/5">
+  <label class="form-check-label" for="exampleRadios1">
+    4/5 Door
+  </label>
+</div></div>
+      </div>
+  </div>
+
+
+  <div class="col-4">
+     <div class="form-group">
+      <input id="price" class="form-control" value="" name="price" placeholder="Price under">
+      </input>
+    </div>
+    <div class="form-group">
+      <select id="fuel" class="form-control" name="fuel">
+        <option value="">Fuel</option>
+        <option value="gasoline">Gasoline</option>
+        <option value="diesel">Diesel</option>
+        <option value="lpg">LPG</option>
+        <option value="hybrid">Hybrid</option>
+        <option value="electro">Electro</option>
+      </select>
+    </div>
+     <button type="submit" class="btn btn-primary">Search</button>
+  </div>
+  </div>
+</form>

@@ -1,57 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ads index{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-    <h1>Ads index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Maker</th>
-                <th>Model</th>
-                <th>Fuel</th>
-                <th>Volume</th>
-                <th>Price</th>
-                <th>Year</th>
-                <th>Body</th>
-                <th>Pictures</th>
-                <th>Equipment</th>
-                <th>About</th>
-                <th>Door</th>
-                <th>Contact</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+        {% include './assets/search.html.twig' %}
+    <div class="row">
         {% for ad in ads %}
-            <tr>
-                <td>{{ ad.id }}</td>
-                <td>{{ ad.maker }}</td>
-                <td>{{ ad.model }}</td>
-                <td>{{ ad.fuel }}</td>
-                <td>{{ ad.volume }}</td>
-                <td>{{ ad.price }}</td>
-                <td>{{ ad.year }}</td>
-                <td>{{ ad.body }}</td>
-                <td>{{ ad.pictures ? ad.pictures|json_encode : '' }}</td>
-                <td>{{ ad.equipment ? ad.equipment|json_encode : '' }}</td>
-                <td>{{ ad.about }}</td>
-                <td>{{ ad.door }}</td>
-                <td>{{ ad.contact ? ad.contact|json_encode : '' }}</td>
-                <td>
-                    <a href="{{ path('ads_show', {'id': ad.id}) }}">show</a>
-                    <a href="{{ path('ads_edit', {'id': ad.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="14">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="col-3 my-2" style="border:1px solid cornsilk" >  
+                <div class="div">
+                    <p>{{ad.maker ~ ' ' ~ ad.model}} <strong class="float-right">{{ad.price}}</strong></p>
+                    <a href="{{ path('ads_show', {'id': ad.id}) }}">
+                <img class="w-100" src="{{ asset('images/')}}{{  ad.pictures[0] }}" alt="">
+            </a>
+                </div>
 
-    <a href="{{ path('ads_new') }}">Create new</a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

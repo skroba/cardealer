@@ -17,7 +17,7 @@ class AdsType extends AbstractType {
 				'label' => 'Choose model',
 				'choices' => $options['model'],
 			])
-			->add('model')
+			->add('model', ChoiceType::class)
 			->add('fuel', ChoiceType::class, [
 				'choices' => [
 					'gasoline' => 'gasoline',
@@ -65,11 +65,6 @@ class AdsType extends AbstractType {
 				],
 			])
 			->add('about')
-			->add('contact', ChoiceType::class, [
-				'label' => 'Choose user',
-				'choices' => $options['user'],
-
-			])
 		;
 	}
 

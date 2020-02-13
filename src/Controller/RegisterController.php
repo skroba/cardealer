@@ -21,6 +21,8 @@ class RegisterController extends AbstractController {
 		$form = $this->createFormBuilder()
 			->add('username', TextType::class)
 			->add('email', TextType::class)
+			->add('telephone', TextType::class)
+			->add('address', TextType::class)
 			->add('password', RepeatedType::class, [
 				'type' => PasswordType::class,
 				'invalid_message' => 'The password fields must match.',
@@ -59,7 +61,8 @@ class RegisterController extends AbstractController {
 
 				$user = new User;
 				$user->setUsername($form->getData()['username']);
-
+				$user->setTelephone($form->getData()['telephone']);
+				$user->setAddress($form->getData()['address']);
 				$user->setAuthenticated($hash);
 				$user->setPassword($encoder->encodePassword($user, $form->getData()['password']));
 				$user->setEmail($form->getData()['email']);

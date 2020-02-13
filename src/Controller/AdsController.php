@@ -5,6 +5,7 @@ use App\Entity\Ads;
 use App\Form\AdsType;
 use App\Repository\AdsRepository;
 use App\Repository\ModelsRepository;
+use App\Repository\UserRepository;
 use DateTime;
 use Intervention\Image\ImageManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,10 @@ class AdsController extends AbstractController {
 	/**
 	 * @Route("/", name="ads_index", methods={"GET"})
 	 */
-	public function index(AdsRepository $adsRepository): Response {
+	public function index(AdsRepository $adsRepository, ModelsRepository $modelsRepository): Response {
 		return $this->render('ads/index.html.twig', [
 			'ads' => $adsRepository->findAll(),
+			'models' => $modelsRepository->findAll(),
 		]);
 	}
 
@@ -37,7 +39,7 @@ class AdsController extends AbstractController {
 			$model = array_merge($model, $c);
 		}
 		ksort($model);
-		$form = $this->createForm(AdsType::class, $ad, ['model' => $model, 'user' => array_flip([$this->getUser()->getId()])]);
+		$form = $this->createForm(AdsType::class, $ad, ['model' => $model]);
 
 		$form->handleRequest($request);
 
@@ -48,6 +50,7 @@ class AdsController extends AbstractController {
 			$ad->setEquipment($form->getData()->getEquipment());
 
 			$folder = $date->getTimestamp();
+
 			$manager = new ImageManager(array('driver' => 'gd'));
 			$imgjson = [];
 			foreach ($form->getData()->getPictures() as $file) {
@@ -58,9 +61,10 @@ class AdsController extends AbstractController {
 				$imgjson[] = $folder . '/' . $filename;
 
 			}
-			$ad->setPictures($imgjson);
-			$ad->setContact('1');
 
+			$ad->setPictures($imgjson);
+			$ad->setContact($this->getUser()->getId());
+			$ad->setAdded($folder);
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($ad);
 			$entityManager->flush();
@@ -77,9 +81,11 @@ class AdsController extends AbstractController {
 	/**
 	 * @Route("/{id}", name="ads_show", methods={"GET"})
 	 */
-	public function show(Ads $ad): Response {
+	public function show(Ads $ad, userRepository $userRepository): Response {
+
 		return $this->render('ads/show.html.twig', [
 			'ad' => $ad,
+			'contact' => $userRepository->findOneBy(['id' => $ad->getContact()]),
 		]);
 	}
 

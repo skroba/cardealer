@@ -74,130 +74,146 @@ class Ads {
 	 * @ORM\Column(type="string")
 	 */
 	private $contact;
+	/**
+	 * @ORM\Column(type="string")
+	 */
+	private $added;
 
 	public function getId():  ? int {
-		return $this->id;
-	}
+      		return $this->id;
+      	}
 
 	public function getMaker() :  ? string {
-		return $this->maker;
-	}
+      		return $this->maker;
+      	}
 
 	public function setMaker(string $maker) : self{
-		$this->maker = $maker;
-
-		return $this;
-	}
+      		$this->maker = $maker;
+      
+      		return $this;
+      	}
 
 	public function getModel():  ? string {
-		return $this->model;
-	}
+      		return $this->model;
+      	}
 
 	public function setModel(string $model) : self{
-		$this->model = $model;
-
-		return $this;
-	}
+      		$this->model = $model;
+      
+      		return $this;
+      	}
 
 	public function getFuel():  ? string {
-		return $this->fuel;
-	}
+      		return $this->fuel;
+      	}
 
 	public function setFuel(string $fuel) : self{
-		$this->fuel = $fuel;
-
-		return $this;
-	}
+      		$this->fuel = $fuel;
+      
+      		return $this;
+      	}
 
 	public function getVolume():  ? int {
-		return $this->volume;
-	}
+      		return $this->volume;
+      	}
 
 	public function setVolume( ? int $volume) : self{
-		$this->volume = $volume;
-
-		return $this;
-	}
+      		$this->volume = $volume;
+      
+      		return $this;
+      	}
 
 	public function getPrice() :  ? int {
-		return $this->price;
-	}
+      		return $this->price;
+      	}
 
 	public function setPrice(int $price) : self{
-		$this->price = $price;
-
-		return $this;
-	}
+      		$this->price = $price;
+      
+      		return $this;
+      	}
 
 	public function getYear():  ? int {
-		return $this->year;
-	}
+      		return $this->year;
+      	}
 
 	public function setYear(int $year) : self{
-		$this->year = $year;
-
-		return $this;
-	}
+      		$this->year = $year;
+      
+      		return $this;
+      	}
 
 	public function getBody():  ? string {
-		return $this->body;
-	}
+      		return $this->body;
+      	}
 
 	public function setBody(string $body) : self{
-		$this->body = $body;
-
-		return $this;
-	}
+      		$this->body = $body;
+      
+      		return $this;
+      	}
 
 	public function getPictures():  ? array
-	{
-		return $this->pictures;
-	}
+      	{
+      		return $this->pictures;
+      	}
 
 	public function setPictures( ? array $pictures) : self{
-		$this->pictures = $pictures;
-
-		return $this;
-	}
+      		$this->pictures = $pictures;
+      
+      		return $this;
+      	}
 
 	public function getEquipment() :  ? array
-	{
-		return $this->equipment;
-	}
+      	{
+      		return $this->equipment;
+      	}
 
 	public function setEquipment( ? array $equipment) : self{
-		$this->equipment = $equipment;
-
-		return $this;
-	}
+      		$this->equipment = $equipment;
+      
+      		return $this;
+      	}
 
 	public function getAbout() :  ? string {
-		return $this->about;
-	}
+      		return $this->about;
+      	}
 
 	public function setAbout(string $about) : self{
-		$this->about = $about;
-
-		return $this;
-	}
+      		$this->about = $about;
+      
+      		return $this;
+      	}
 
 	public function getDoor():  ? string {
-		return $this->door;
-	}
+      		return $this->door;
+      	}
 
 	public function setDoor(string $door) : self{
-		$this->door = $door;
-
-		return $this;
-	}
+      		$this->door = $door;
+      
+      		return $this;
+      	}
 
 	public function getContact():  ? string {
-		return $this->contact;
-	}
+      		return $this->contact;
+      	}
 
 	public function setContact(string $contact) : self{
-		$this->contact = $contact;
+      		$this->contact = $contact;
+      
+      		return $this;
+      	}
 
-		return $this;
-	}
+    public function getAdded(): ?string
+    {
+        return $this->added;
+    }
+
+    public function setAdded(string $added): self
+    {
+        $this->added = $added;
+
+        return $this;
+    }
 }

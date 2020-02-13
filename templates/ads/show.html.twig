@@ -3,68 +3,62 @@
 {% block title %}Ads{% endblock %}
 
 {% block body %}
-    <h1>Ads</h1>
+<div class="row">
+    <div class="col-8">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    {% for i in range(1, ad.pictures|length) %}
+     <li data-target="#carouselExampleIndicators" data-slide-to="{{i}}" class="active"></li>
+{% endfor %}
+  </ol>
+  <div class="carousel-inner">
+      <div class="carousel-item active">
+      <img class="d-block w-100" src="{{ asset('images/')}}{{  ad.pictures[0] }}" alt="{{ asset('images/')}}{{  ad.pictures[0] }}">
+    </div>
+    {% for picture in ad.pictures %}
+    <div class="carousel-item ">
+      <img class="d-block w-100" src="{{ asset('images/')}}{{  picture }}" alt="{{picture}}">
+    </div>
+    {% endfor %} 
+   
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+     <h3>About</h3>
+     {{ad.about}}
+</div>
+<div class="col-4">
+        <h3>Specs&price</h3>
+    <ul style="list-style: none;">
+        <li><strong>{{ad.price}}</strong> eur</li>
+        <li>{{ad.maker}}</li>
+        <li>{{ad.model}}</li>
+        <li>{{ad.year}}</li>
+        <li>{{ad.fuel}}</li>
+        <li>{{ad.body}}</li>
+        <li>{{ad.door}}</li>
+    </ul>
+    <h3>Equipment</h3>
+    <ul style="list-style: none;">
+        {% for option in ad.equipment %}
+        <li>{{option}}</li>
+        {% endfor %}
+    </ul>
+        <h3>Contact</h3>
+    <ul style="list-style: none;">
+      <li>{{contact.username}}</li>
+      <li>{{contact.telephone}}</li> 
+      <li>{{contact.address}}</li> 
+    </ul>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ ad.id }}</td>
-            </tr>
-            <tr>
-                <th>Maker</th>
-                <td>{{ ad.maker }}</td>
-            </tr>
-            <tr>
-                <th>Model</th>
-                <td>{{ ad.model }}</td>
-            </tr>
-            <tr>
-                <th>Fuel</th>
-                <td>{{ ad.fuel }}</td>
-            </tr>
-            <tr>
-                <th>Volume</th>
-                <td>{{ ad.volume }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ ad.price }}</td>
-            </tr>
-            <tr>
-                <th>Year</th>
-                <td>{{ ad.year }}</td>
-            </tr>
-            <tr>
-                <th>Body</th>
-                <td>{{ ad.body }}</td>
-            </tr>
-            <tr>
-                <th>Pictures</th>
-                <td>{{ ad.pictures ? ad.pictures|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Equipment</th>
-                <td>{{ ad.equipment ? ad.equipment|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>About</th>
-                <td>{{ ad.about }}</td>
-            </tr>
-            <tr>
-                <th>Door</th>
-                <td>{{ ad.door }}</td>
-            </tr>
-            <tr>
-                <th>Contact</th>
-                <td>{{ ad.contact ? ad.contact|json_encode : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('ads_index') }}">back to list</a>
-
-    <a href="{{ path('ads_edit', {'id': ad.id}) }}">edit</a>
-
-    {{ include('ads/_delete_form.html.twig') }}
+</div>
+</div>
 {% endblock %}
