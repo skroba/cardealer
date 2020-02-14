@@ -35,14 +35,42 @@ class AdsController extends AbstractController {
 		$request = Request::createFromGlobals();
 
 		$query = $request->request->all();
+
+		if (isset($query['yearfrom'])) {
+			$yearfrom = $query['yearfrom'];
+		}
+		if (isset($query['yearto'])) {
+			$yearto = $query['yearto'];
+		}
+		if (isset($query['mileage'])) {
+			$mileage = $query['mileage'];
+		}
+		if (isset($query['price'])) {
+			$price = $query['price'];
+		}
+
+		unset($query['yearfrom'], $query['yearto'], $query['price'], $query['mileage']);
 		foreach ($query as $key => $value) {
 			if ($value == "") {
 				unset($query[$key]);}
+		}
+
+		$ads = $adsRepository->findBy($query);
+
+		foreach ($ads as $key => $data) {
+			if (!empty($price) && $price < $data->getPrice()) {
+				unset($ads[$key]);}
+			if (!empty($yearfrom) && $yearfrom > $data->getYear()) {
+				unset($ads[$key]);}
+			if (!empty($yearto) && $yearto < $data->getYear()) {
+				unset($ads[$key]);}
+			if (!empty($mileage) && $mileage < $data->getMileage()) {
+				unset($ads[$key]);}
 
 		}
 
 		return $this->render('ads/index.html.twig', [
-			'ads' => $adsRepository->findBy($query),
+			'ads' => $ads,
 			'models' => $modelsRepository->findAll(),
 		]);
 	}
@@ -62,14 +90,11 @@ class AdsController extends AbstractController {
 		$form = $this->createForm(AdsType::class, $ad, ['model' => $model]);
 
 		$form->handleRequest($request);
-
-		if ($form->isSubmitted() && $form->isValid()) {
-			dump($ad);die;
-
+		if ($form->isSubmitted()) {
 			$date = new DateTime();
 
 			$ad->setEquipment($form->getData()->getEquipment());
-
+			$ad->setModel($form->get('model')->getViewData());
 			$folder = $date->getTimestamp();
 
 			$manager = new ImageManager(array('driver' => 'gd'));
@@ -86,7 +111,6 @@ class AdsController extends AbstractController {
 			$ad->setPictures($imgjson);
 			$ad->setContact($this->getUser()->getId());
 			$ad->setAdded($folder);
-			dump($ad);die;
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($ad);
 			$entityManager->flush();

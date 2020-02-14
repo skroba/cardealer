@@ -17,11 +17,7 @@ class AdsType extends AbstractType {
 				'label' => 'Choose model',
 				'choices' => $options['model'],
 			])
-			->add('model', ChoiceType::class, [
-				'choices' => [
-					'model' => '',
-				],
-			])
+			->add('model', ChoiceType::class)
 			->add('fuel', ChoiceType::class, [
 				'choices' => [
 					'gasoline' => 'gasoline',
@@ -77,7 +73,25 @@ class AdsType extends AbstractType {
 			])
 			->add('about')
 		;
+		// $builder->get('maker')->addEventListener(
+		// 	FormEvents::POST_SUBMIT,
+		// 	function (FormEvent $event) {
+		// 		$test = '';
+		// 		$form = $event->getForm();
+		// 		$this->setModelForCar(
+		// 			$form->getParent(),
+		// 			$event->getData()
+		// 		);
+		// 	}
+		// );
 	}
+	// public function setModelForCar(FormInterface $form,  ? string $model) {
+	// 	$form->add('model', ChoiceType::class, [
+	// 		'placeholder' => 'Where exactly?',
+	// 		'choices' => ['test' => 'test'],
+	// 		'required' => false,
+	// 	]);
+	// }
 
 	public function configureOptions(OptionsResolver $resolver) {
 		$resolver->setDefaults([

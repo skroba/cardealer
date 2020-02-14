@@ -16,19 +16,19 @@
     <div class="row">
 
       <div class="col-6"><div class="form-group">
-      <select id="year" class="form-control" name="year">
+      <select id="yearfrom" class="form-control" name="yearfrom">
         <option value="">1934</option>
         {% for i in range(2020, 1935) %}
-            <option value =" >= {{i}}">{{i}}</option>
+            <option value ="{{i}}">{{i}}</option>
         {% endfor %}
       </select>
     </div>
     </div>
       <div class="col-6"><div class="form-group">
-      <select id="year" class="form-control" name="year">
+      <select id="yearto" class="form-control" name="yearto">
         <option value="">2020</option>
               {% for i in range(2020, 1935) %}
-            <option value=" <= {{i}}">{{i}}</option>
+            <option value="{{i}}">{{i}}</option>
         {% endfor %}
       </select>
     </div></div>
@@ -37,12 +37,12 @@
      <div class="form-group">
       <select id="mileage" class="form-control" name="mileage">
         <option value="">Miles under</option>
-        <option value="<=50000">50000</option>
-        <option value="<=100000">100000</option>
-        <option value="<=150000">150000</option>
-        <option value="<=200000">200000</option>
-        <option value="<=250000">250000</option>
-        <option value="<=300000">300000</option>
+        <option value="50000">50000</option>
+        <option value="100000">100000</option>
+        <option value="150000">150000</option>
+        <option value="200000">200000</option>
+        <option value="250000">250000</option>
+        <option value="300000">300000</option>
       </select>
     </div>
   </div>

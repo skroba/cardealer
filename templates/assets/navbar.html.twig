@@ -8,11 +8,14 @@
     <ul class="navbar-nav mr-auto">
        {% if app.user %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ path('ads_new') }}">Create</a>
+        <a class="nav-link" href="{{ path('ads_new') }}">Create New AD</a>
       </li>
-       <li class="nav-item">
+      {% if is_granted('ROLE_ADMIN') %}
+      <li class="nav-item">
         <a class="nav-link" href="{{ path('models_new') }}">New car</a>
       </li>
+      {% endif %}
+       
       {% endif %}
       {% if app.user %}
       <li class="nav-item dropdown  float-right">
