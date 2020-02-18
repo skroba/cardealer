@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdsController extends AbstractController {
 	/**
-	 * @Route("/{pagination?}", name="ads_index", requirements={"pagination"="\d+"}, methods={"GET"})
+	 * @Route("/all/{pagination?}", name="ads_index", requirements={"pagination"="\d+"}, methods={"GET"})
 	 */
 	public function index(AdsRepository $adsRepository, ModelsRepository $modelsRepository, $pagination): Response {
 		if (!empty($pagination)) {
