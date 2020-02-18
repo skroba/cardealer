@@ -84,3 +84,11 @@ function getModels(val) {
 
 
  onChange="getModels(this.value);"
+
+ id
+ ko salje
+ ko prima
+ za koji oglas
+ text poruke
+ timestamp
+ seen

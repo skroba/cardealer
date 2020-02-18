@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messages index{% endblock %}
+
+{% block body %}
+    <h2>Messages index: you have {{seen}} new messages</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Car</th>
+                <th>Text</th>
+                <th>Sent on</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for message in messages %}
+            <tr  {% if message.seen == 0 %} style="font-weight: bold" {% endif %}>
+                <td>{{ message.sender }}</td>
+                <td>{{ message.ad }}</td>
+                <td>{{ message.text }}</td>
+                <td>{{ message.timestamp|date("F jS \\a\\t g:ia") }}</td>
+                <td><div>
+                    <a class="btn btn-success btn-sm d-inline" href="{{ path('message.show', {'messages': message.id}) }}">Show</a>
+                    </div>
+                    {{ include('message/_delete_form.html.twig') }}
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No messages found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

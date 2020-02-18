@@ -35,3 +35,4 @@ security:
     access_control:
         - { path: ^/models/new, roles: ROLE_ADMIN }
         - { path: ^/ads/new, roles: ROLE_USER }
+        - { path: ^/message, roles: ROLE_USER }

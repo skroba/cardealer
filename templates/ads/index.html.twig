@@ -4,17 +4,30 @@
 
 {% block body %}
         {% include './assets/search.html.twig' %}
+                <h3>We have {{count|length}} ads</h3>
     <div class="row">
+
         {% for ad in ads %}
             <div class="col-3 my-2" style="border:1px solid cornsilk" >  
                 <div class="div">
                     <p>{{ad.maker ~ ' ' ~ ad.model}} <strong class="float-right">{{ad.price}}</strong></p>
                     <a href="{{ path('ads_show', {'id': ad.id}) }}">
-                <img class="w-100" src="{{ asset('images/')}}{{  ad.pictures[0] }}" alt="">
+                <img style="width: auto; height: 180px;" 
+    class="w-100" src="{{ asset('images/')}}{{  ad.pictures[0] }}" alt="">
             </a>
                 </div>
 
             </div>
         {% endfor %}
+    </div>
+
+                <div class="d-flex justify-content-center">
+        {% if count is defined and count|length > 12  %}
+            {% for i in 1..((count|length) / 12) | round(0, 'ceil') %}
+            {% if i >= 1 and count|length > 0 %}
+                <a class="btn btn-info px-3" href="{{ path('ads_index', {'pagination': i-1}) }}">{{i}}</a>
+            {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

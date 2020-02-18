@@ -18,11 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdsController extends AbstractController {
 	/**
-	 * @Route("/", name="ads_index", methods={"GET"})
+	 * @Route("/{pagination?}", name="ads_index", requirements={"pagination"="\d+"}, methods={"GET"})
 	 */
-	public function index(AdsRepository $adsRepository, ModelsRepository $modelsRepository): Response {
+	public function index(AdsRepository $adsRepository, ModelsRepository $modelsRepository, $pagination): Response {
+		if (!empty($pagination)) {
+			$pagination = $pagination * 12;
+		}
+
 		return $this->render('ads/index.html.twig', [
-			'ads' => $adsRepository->findAll(),
+			'count' => $adsRepository->findAll(),
+			'ads' => $adsRepository->findBy([], ['id' => 'DESC'], 12, $pagination),
 			'models' => $modelsRepository->findAll(),
 		]);
 	}
@@ -56,7 +61,6 @@ class AdsController extends AbstractController {
 		}
 
 		$ads = $adsRepository->findBy($query);
-
 		foreach ($ads as $key => $data) {
 			if (!empty($price) && $price < $data->getPrice()) {
 				unset($ads[$key]);}
@@ -70,6 +74,7 @@ class AdsController extends AbstractController {
 		}
 
 		return $this->render('ads/index.html.twig', [
+			'count' => $ads,
 			'ads' => $ads,
 			'models' => $modelsRepository->findAll(),
 		]);
@@ -150,7 +155,7 @@ class AdsController extends AbstractController {
 		$form = $this->createForm(AdsType::class, $ad, ['model' => $model]);
 		$form->handleRequest($request);
 
-		if ($form->isSubmitted() && $form->isValid()) {
+		if ($form->isSubmitted()) {
 			$this->getDoctrine()->getManager()->flush();
 
 			return $this->redirectToRoute('ads_index');
