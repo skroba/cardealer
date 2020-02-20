@@ -22,10 +22,12 @@
                 <td>{{ message.ad }}</td>
                 <td>{{ message.text }}</td>
                 <td>{{ message.timestamp|date("F jS \\a\\t g:ia") }}</td>
-                <td><div>
-                    <a class="btn btn-success btn-sm d-inline" href="{{ path('message.show', {'messages': message.id}) }}">Show</a>
-                    </div>
-                    {{ include('message/_delete_form.html.twig') }}
+                <td><div class="row">
+                    <div class="col"><a class="btn btn-success btn-sm" href="{{ path('message.show', {'messages': message.id}) }}">Show</a></div>
+                    <div class="col">
+                    {{ include('message/_delete_form.html.twig') }}</div>
+                </div>
+            
 
             </tr>
         {% else %}

@@ -1,0 +1,25 @@
+.footer{
+	background:   #e7e1e0  ;
+	margin-top: 15px;
+}
+.item-text{
+	font-size: 18px;
+	margin: 3px;
+
+}
+
+ul{list-style: none;}
+
+.footerbtn a{
+	background:   #bdb9b8   ;
+	color:black;
+	display: block;
+	text-align: center;
+	padding: 5px;
+	margin: 10px;
+}
+.footerbtn a:hover{
+		background:#e7e1e0;
+		text-decoration: none;
+		color:white;
+}

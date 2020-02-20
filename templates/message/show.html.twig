@@ -8,7 +8,7 @@
 <h4>User {{message.sender}} sent message on {{message.timestamp|date('Y-m-d H:i:s')}} </h4>
 <p>{{car}}</p> 
 <p>{{message.text}}</p> 
-<a href="{{ path('message.create', {'id': message.ad}) }}">Reply</a>
+<a class="btn btn-success" href="{{ path('message.create', {'id': message.ad}) }}">Reply</a>
 
 {% endblock %}
 

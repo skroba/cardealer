@@ -179,4 +179,73 @@ class RegisterController extends AbstractController {
 			'message' => 'Reset your password',
 		]);
 	}
+	/**
+	 * @Route("/edit/", name="edituser")
+	 */
+	public function edituser(UserRepository $userRepository, Request $request) {
+		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
+		$form = $this->createFormBuilder($user)
+			->add('telephone')
+			->add('address')
+			->add('Update', SubmitType::class, [
+				'attr' => ['class' => 'save btn btn-success'],
+			])
+			->getForm();
+
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($user);
+			$em->flush();
+			return $this->redirectToRoute('edituser');
+		} else {
+			return $this->render('register/edit.html.twig', [
+				'form' => $form->createView(),
+			]);
+		}
+		return $this->render('register/edit.html.twig', [
+			'form' => $form->createView(),
+		]);
+
+	}
+	/**
+	 * @Route("/favoriteadd/{id}", name="favoriteadd")
+	 */
+	public function favoriteAdd(UserRepository $userRepository, $id) {
+		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
+		$a = $user->getFavorites();
+		$test = explode(',', $a);
+		if (($key = array_search($id, $test)) !== false) {
+			return $this->redirectToRoute('allfavorites');
+		}
+		$a .= ',' . $id;
+		$user->setFavorites($a);
+
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($user);
+		$em->flush();
+		return $this->redirectToRoute('allfavorites');
+	}
+
+	/**
+	 * @Route("/favoriteremove/{id}", name="favoriteremove")
+	 */
+	public function favoriteRemove(UserRepository $userRepository, $id) {
+		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
+		$a = $user->getFavorites();
+		$test = explode(',', $a);
+		if (($key = array_search($id, $test)) !== false) {
+			unset($test[$key]);
+		}
+		$a = implode(',', $test);
+		$user->setFavorites($a);
+
+		$em = $this->getDoctrine()->getManager();
+		$em->persist($user);
+		$em->flush();
+		return $this->redirectToRoute('allfavorites');
+	}
+
 }

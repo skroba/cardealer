@@ -5,6 +5,7 @@
 {% block body %}
 <div class="row">
     <div class="col-8">
+      {% if ad.pictures[0] is defined %}
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     {% for i in range(1, ad.pictures|length) %}
@@ -31,34 +32,68 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+{% else %}
+    <div class="col-8">
+        <img src="https://image.shutterstock.com/image-illustration/black-linear-photo-camera-logo-260nw-1412111903.jpg" alt="">
+    </div>
+{% endif %}
+
      <h3>About</h3>
      {{ad.about}}
 </div>
-<div class="col-4">
-        <h3>Specs&price</h3>
+<div class="col-4 ">
+  
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="{{ app.request.uri }}" data-layout="box_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+
+      
+
     <ul style="list-style: none;">
-        <li><strong>{{ad.price}}</strong> eur</li>
-        <li>{{ad.added|date('d. M Y')}}</li>
-        <li>{{ad.maker}}</li>
-        <li>{{ad.model}}</li>
-        <li>{{ad.year}}</li>
-        <li>{{ad.fuel}}</li>
-        <li>{{ad.body}}</li>
-        <li>{{ad.door}}</li>
+        <h3>Specs & price</h3>
+        <li>Price:<strong>{{ad.price}}</strong> eur</li>
+        <li>Added: {{ad.added|date('d. M Y')}}</li>
+        <li>Maker: {{ad.maker}}</li>
+        <li>Model: {{ad.model}}</li>
+        <li>Year: {{ad.year}}</li>
+        <li>Fuel: {{ad.fuel}}</li>
+        <li>Bodytype: {{ad.body}}</li>
+        <li>Doors: {{ad.door}}</li>
     </ul>
-    <h3>Equipment</h3>
-    <ul style="list-style: none;">
+    <ul>
+        <h3>Equipment</h3>
         {% for option in ad.equipment %}
         <li>{{option}}</li>
         {% endfor %}
     </ul>
-        <h3>Contact</h3>
-    <ul style="list-style: none;">
+    <ul>
+      <h3>Contact</h3>
       <li>{{contact.username}}</li>
       <li>{{contact.telephone}}</li> 
       <li>{{contact.address}}</li> 
     </ul>
-    <a class="btn btn-secondary" href="{{ path('message.create', {'id': ad.id}) }}">Send Message</a>
+    {% if app.user.id is defined and app.user.id != ad.contact %} <a class="btn btn-secondary" 
+    href="{{ path('message.create', {'id': ad.id}) }}">Send Message</a>{% endif %}
+    {% if app.user.id is defined and app.user.id == ad.contact %}<a class="btn btn-warning" 
+    href="{{ path('ads_edit', {'id': ad.id}) }}">Edit</a>{% endif %}
+   
+        
+        
+         {% if app.user.id is defined %}
+
+           {% set foo = app.user.favorites|split(',') %}
+
+             {% if ad.id in foo %}
+             <a class="btn btn-danger" 
+            href="{{ path('favoriteremove', {'id': ad.id}) }}">Delete From Favorites</a>
+
+
+          {% else %}
+
+               <a class="btn btn-warning" 
+               href="{{ path('favoriteadd', {'id': ad.id}) }}">Add To Favorites</a>
+          {% endif %}
+            {% endif %}
 
 
 </div>

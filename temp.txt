@@ -13,6 +13,20 @@ door(2/3, 4/5)
 contact(name, telephone, city)
 miles
 
+kw
+label
+EURO
+
+fwd rwd
+
+airconditioner(no, manual, automatic)
+
+color
+
+insurance
+security(airbag, )
+
+
 
 
 maker
@@ -92,3 +106,14 @@ function getModels(val) {
  text poruke
  timestamp
  seen
+
+
+["1582111741\/07c9841563356a38e9a1454b1df73f93.jpeg","1582111741\/8854ad800bd6fd5a44bf0c2f30844ea7.jpeg","1582111741\/b1032309ff5971e91adfaab2ade746cb.jpeg","1582111741\/3e5856a791d5ffe6285d15d03a97829a.jpeg","1582111741\/4fadb0c89c4fa9b55719aa7d7349ab5e.jpeg","1582111741\/35e998042f3486dde94147c9d5aef14f.jpeg","1582111741\/9e9a732c1c3059c565a155f45e17e383.jpeg","1582111741\/7e96678379ac15dee0b789466de8abc5.jpeg","1582111741\/a7703b3c7be7a07106c598de57d91d5a.jpeg","1582111741\/60760f188a09348cad965401be882d48.jpeg"]
+
+http://localhost/cardealer/public/index.php/ads/search?maker=&yearfrom=&yearto=&mileage=&model=&body=&door=&price=&fuel=gasoline
+
+<a href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fdeveloper.twitter.com%2Fen%2Fdocs%2Ftwitter-for-websites%2Ftweet-button%2Foverview&amp;ref_src=twsrc%5Etfw&amp;text=Guides%20%E2%80%94%20Twitter%20Developers&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Fdeveloper.twitter.com%2Fen%2Fdocs%2Ftwitter-for-websites%2Ftweet-button%2Foverview" class="btn" id="b"><i></i><span class="label" id="l">Tweet</span></a>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Department of the Interior (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

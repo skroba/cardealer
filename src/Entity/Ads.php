@@ -28,6 +28,11 @@ class Ads {
 	/**
 	 * @ORM\Column(type="string", length=255)
 	 */
+	private $label;
+
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
 	private $gearchange;
 
 	/**
@@ -39,6 +44,16 @@ class Ads {
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	private $volume;
+
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $hp;
+
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	private $seats;
 
 	/**
 	 * @ORM\Column(type="integer")
@@ -61,6 +76,31 @@ class Ads {
 	private $body;
 
 	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $color;
+
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $aircon;
+
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $insurance;
+
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $euro;
+
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $drive;
+
+	/**
 	 * @ORM\Column(type="json", nullable=true)
 	 */
 	private $pictures = [];
@@ -69,6 +109,11 @@ class Ads {
 	 * @ORM\Column(type="json", nullable=true)
 	 */
 	private $equipment = [];
+
+	/**
+	 * @ORM\Column(type="json", nullable=true)
+	 */
+	private $security = [];
 
 	/**
 	 * @ORM\Column(type="text")
@@ -225,26 +270,117 @@ class Ads {
             		return $this;
             	}
 
-    public function getGearchange(): ?string
+	public function getGearchange():  ? string {
+            		return $this->gearchange;
+            	}
+
+	public function setGearchange(string $gearchange) : self{
+            		$this->gearchange = $gearchange;
+            
+            		return $this;
+            	}
+
+	public function getMileage():  ? int {
+            		return $this->mileage;
+            	}
+
+	public function setMileage(int $mileage) : self{
+            		$this->mileage = $mileage;
+            
+            		return $this;
+            	}
+
+	public function getLabel():  ? string {
+            		return $this->label;
+            	}
+
+	public function setLabel(string $label) : self{
+            		$this->label = $label;
+            
+            		return $this;
+            	}
+
+	public function getHp():  ? int {
+            		return $this->hp;
+            	}
+
+	public function setHp(int $hp) : self{
+            		$this->hp = $hp;
+            
+            		return $this;
+            	}
+
+	public function getColor():  ? string {
+            		return $this->color;
+            	}
+
+	public function setColor(string $color) : self{
+            		$this->color = $color;
+            
+            		return $this;
+            	}
+
+	public function getInsurance():  ? string {
+            		return $this->insurance;
+            	}
+
+	public function setInsurance(string $insurance) : self{
+            		$this->insurance = $insurance;
+            
+            		return $this;
+            	}
+
+	public function getEuro():  ? string {
+            		return $this->euro;
+            	}
+
+	public function setEuro(string $euro) : self{
+            		$this->euro = $euro;
+            
+            		return $this;
+            	}
+
+	public function getDrive():  ? string {
+            		return $this->drive;
+            	}
+
+	public function setDrive(string $drive) : self{
+            		$this->drive = $drive;
+            
+            		return $this;
+            	}
+
+	public function getSecurity():  ? array
+            	{
+            		return $this->security;
+            	}
+
+	public function setSecurity( ? array $security) : self{
+            		$this->security = $security;
+            
+            		return $this;
+            	}
+
+    public function getSeats(): ?int
     {
-        return $this->gearchange;
+        return $this->seats;
     }
 
-    public function setGearchange(string $gearchange): self
+    public function setSeats(int $seats): self
     {
-        $this->gearchange = $gearchange;
+        $this->seats = $seats;
 
         return $this;
     }
 
-    public function getMileage(): ?int
+    public function getAircon(): ?string
     {
-        return $this->mileage;
+        return $this->aircon;
     }
 
-    public function setMileage(int $mileage): self
+    public function setAircon(string $aircon): self
     {
-        $this->mileage = $mileage;
+        $this->aircon = $aircon;
 
         return $this;
     }

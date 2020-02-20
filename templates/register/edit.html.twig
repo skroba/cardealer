@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Change data{% endblock %}
+
+{% block body %}
+	{% if message is defined %}
+	<div class="alert alert-success" role="alert">
+  			{{message}}
+	</div>
+
+	{% endif %}
+
+	{{form(form)}}
+{% endblock %}

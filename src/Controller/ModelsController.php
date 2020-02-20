@@ -34,7 +34,10 @@ class ModelsController extends AbstractController {
 		if ($form->isSubmitted() && $form->isValid()) {
 			$entityManager = $this->getDoctrine()->getManager();
 			$model->setMaker(ucwords($form->getData()->getMaker()));
-
+			$temp = explode(',', $model->getModel());
+			sort($temp);
+			$a = implode(',', $temp);
+			$model->setModel($a);
 			$entityManager->persist($model);
 			$entityManager->flush();
 
@@ -79,6 +82,10 @@ class ModelsController extends AbstractController {
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
+			$temp = explode(',', $model->getModel());
+			sort($temp);
+			$a = implode(',', $temp);
+			$model->setModel($a);
 			$this->getDoctrine()->getManager()->flush();
 
 			return $this->redirectToRoute('models_index');

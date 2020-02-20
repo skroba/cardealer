@@ -25,7 +25,9 @@
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{{ path('password_reset') }}">Change password</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="{{ path('edituser') }}">Change contact data</a>
+               <a class="dropdown-item" href="{{ path('search', {'contact':app.user.id}) }}">My ads</a>
+                <a class="dropdown-item" href="{{ path('allfavorites') }}">My favourite ads</a>
               <div class="dropdown-divider"></div>
               <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
             </div>  

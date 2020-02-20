@@ -3,11 +3,22 @@
 {% block title %}Edit Ads{% endblock %}
 
 {% block body %}
-    <h1>Edit Ads</h1>
+    <h1>Edit Ad</h1>
+    <div class="row">
+    	{% set i = 0 %}
+    	{% if ad.pictures is defined  %}
+    {% for picture in ad.pictures %}
+    <div class="col-3 p-2"><img style="max-width: 200px; height: auto;" 
+    class="w-100" src="{{ asset('images/')}}{{  picture }}" alt="">
 
+<a class="btn btn-danger btn-sm" href="{{ path('ads_image_delete', {'id':ad.id, 'image': i})  }}">Delete</a></div>
+      {% set i = i+1 %}
+    {% endfor %}
+    {% endif %}
+</div>
     {{ include('ads/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('ads_index') }}">back to list</a>
+    <a href="{{ path('ads_index')}}">back to list</a>
 
     {{ include('ads/_delete_form.html.twig') }}
 {% endblock %}
