@@ -12,12 +12,11 @@
      <li data-target="#carouselExampleIndicators" data-slide-to="{{i}}" class="active"></li>
 {% endfor %}
   </ol>
+
   <div class="carousel-inner">
-      <div class="carousel-item active">
-      <img class="d-block w-100" src="{{ asset('images/')}}{{  ad.pictures[0] }}" alt="{{ asset('images/')}}{{  ad.pictures[0] }}">
-    </div>
     {% for picture in ad.pictures %}
-    <div class="carousel-item ">
+    <div class="carousel-item {% if ad.pictures[0] == picture %}active {% else %}
+        {% endif %}">
       <img class="d-block w-100" src="{{ asset('images/')}}{{  picture }}" alt="{{picture}}">
     </div>
     {% endfor %} 
@@ -37,8 +36,26 @@
         <img src="https://image.shutterstock.com/image-illustration/black-linear-photo-camera-logo-260nw-1412111903.jpg" alt="">
     </div>
 {% endif %}
+        <hr>
 
-     <h3>About</h3>
+        <h3 class="adsection">Equipment</h3>
+        <div class="row">
+          {% for option in ad.equipment %}
+        <div class="col-2"><h6>{{option}}</h6></div>
+        {% endfor %}
+        </div>
+
+        <hr>
+
+        <h3 class="adsection">Security</h3>
+        <div class="row">
+          {% for option in ad.security %}
+        <div class="col-2"><h6>{{option}}</h6></div>
+        {% endfor %}
+        </div>
+        <hr>
+     <h3 class="adsection">About</h3>
+
      {{ad.about}}
 </div>
 <div class="col-4 ">
@@ -48,34 +65,32 @@
   <div class="fb-share-button" data-href="{{ app.request.uri }}" data-layout="box_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 
       
-
+    <h3 class="adsection">Specs</h3>
+    <strong style="color:red;font-size: 1.3em">{{ad.maker}} {{ad.model}} {{ad.label}}</strong>
     <ul style="list-style: none;">
-        <h3>Specs & price</h3>
-        <li>Price:<strong>{{ad.price}}</strong> eur</li>
+        <li>Price:<strong> {{ad.price}}</strong> eur</li>
         <li>Added: {{ad.added|date('d. M Y')}}</li>
-        <li>Maker: {{ad.maker}}</li>
-        <li>Model: {{ad.model}}</li>
+        <li>Year: {{ad.year}}</li>
+        <li>MIleage: {{ad.mileage}} Km</li>
+        <li>Airconditioner: {{ad.aircon}}</li>
+        <li>Volume: {{ad.volume}}</li>
+        <li>Power: {{ad.hp}} hp</li>
         <li>Year: {{ad.year}}</li>
         <li>Fuel: {{ad.fuel}}</li>
         <li>Bodytype: {{ad.body}}</li>
         <li>Doors: {{ad.door}}</li>
     </ul>
+
+    <h3 class="adsection">Contact</h3>
     <ul>
-        <h3>Equipment</h3>
-        {% for option in ad.equipment %}
-        <li>{{option}}</li>
-        {% endfor %}
-    </ul>
-    <ul>
-      <h3>Contact</h3>
       <li>{{contact.username}}</li>
       <li>{{contact.telephone}}</li> 
       <li>{{contact.address}}</li> 
     </ul>
     {% if app.user.id is defined and app.user.id != ad.contact %} <a class="btn btn-secondary" 
-    href="{{ path('message.create', {'id': ad.id}) }}">Send Message</a>{% endif %}
+    href="{{ path('message.create', {'id': ad.id}) }}">Send Message <i class="far fa-envelope"></i></a>{% endif %}
     {% if app.user.id is defined and app.user.id == ad.contact %}<a class="btn btn-warning" 
-    href="{{ path('ads_edit', {'id': ad.id}) }}">Edit</a>{% endif %}
+    href="{{ path('ads_edit', {'id': ad.id}) }}">Edit <i class="far fa-edit"></i></a>{% endif %}
    
         
         
@@ -85,13 +100,13 @@
 
              {% if ad.id in foo %}
              <a class="btn btn-danger" 
-            href="{{ path('favoriteremove', {'id': ad.id}) }}">Delete From Favorites</a>
+            href="{{ path('favoriteremove', {'id': ad.id}) }}">Remove From Favorites <i class="far fa-star-half"></i></a>
 
 
           {% else %}
 
-               <a class="btn btn-warning" 
-               href="{{ path('favoriteadd', {'id': ad.id}) }}">Add To Favorites</a>
+               <a class="btn btn-success" 
+               href="{{ path('favoriteadd', {'id': ad.id}) }}">Add To Favorites <i class="far fa-star"></i></a>
           {% endif %}
             {% endif %}
 

@@ -4,9 +4,12 @@
 
   <div class="col-4">
      <div class="form-group">
-      <select id="maker" class="form-control" name="maker""
+      <select id="maker" class="form-control custom-select-sm" name="maker""
        onChange="getModels(this.value);" onchange="location.reload()">
-        <option value="">Make</option>
+       {% if app.request.query.get("maker") !='' %} <option value="{{app.request.query.get("maker")}}">{{app.request.query.get("maker")}}</option>{% else %}
+        <option value="">Choose maker</option>
+           {% endif %}
+       
                 {% for make in models %}
         <option value="{{ make.maker }}">{{ make.maker }}</option>
         {% endfor %}
@@ -16,7 +19,7 @@
     <div class="row">
 
       <div class="col-6"><div class="form-group">
-      <select id="yearfrom" class="form-control" name="yearfrom">
+      <select id="yearfrom" class="form-control custom-select-sm" name="yearfrom">
         <option value="">1934</option>
         {% for i in range(2020, 1935) %}
             <option value ="{{i}}">{{i}}</option>
@@ -25,7 +28,7 @@
     </div>
     </div>
       <div class="col-6"><div class="form-group">
-      <select id="yearto" class="form-control" name="yearto">
+      <select id="yearto" class="form-control custom-select-sm" name="yearto">
         <option value="">2020</option>
               {% for i in range(2020, 1935) %}
             <option value="{{i}}">{{i}}</option>
@@ -35,7 +38,12 @@
 
     </div>
      <div class="form-group">
-      <select id="mileage" class="form-control" name="mileage">
+      <select id="mileage" class="form-control  custom-select-sm" name="mileage">
+
+             {% if app.request.query.get("mileage") !='' %} <option value="{{app.request.query.get("mileage")}}">{{app.request.query.get("mileage")}}</option>{% else %}
+           {% endif %}
+
+
         <option value="">Miles under</option>
         <option value="50000">50000</option>
         <option value="100000">100000</option>
@@ -50,13 +58,20 @@
 
   <div class="col-4">
      <div class="form-group">
-      <select id="model" class="form-control" name="model">
-        <option value="">Model</option>
+      <select id="model" class="form-control  custom-select-sm" name="model">
+             {% if app.request.query.get("model") !='' %} <option value="{{app.request.query.get("model")}}">{{app.request.query.get("model")}}</option>{% else %}
+               <option value="">Model</option>
+           {% endif %}
+
       </select>
     </div>
     <div class="form-group">
-      <select id="body" class="form-control" name="body">
-        <option value="">Body</option>
+      <select id="body" class="form-control  custom-select-sm" name="body">
+
+       {% if app.request.query.get("body") !='' %} <option value="{{app.request.query.get("body")}}">{{app.request.query.get("body")}}</option>{% else %}
+        
+           {% endif %}
+        <option value="">Choose body</option>
         <option value="hatchback">Hatchback</option>
         <option value="estate">Estate</option>
         <option value="limousine">Limousine</option>
@@ -66,19 +81,19 @@
     </div>
       <div class="row">
         <div class="col-4"><div class="form-check">
-  <input class="form-check-input" type="radio" name="door" id="door" value="" checked>
+  <input class="form-check-input" type="radio" name="door" id="door" value=""  {% if app.request.query.get("door") == '' %} checked{% endif %}>
   <label class="form-check-label" for="exampleRadios1">
     Door
   </label>
 </div></div>
         <div class="col-4"><div class="form-check">
-  <input class="form-check-input" type="radio" name="door" id="door" value="2/3">
+  <input class="form-check-input" type="radio" name="door" id="door" value="2/3" {% if app.request.query.get("door") == '2/3' %} checked{% endif %}>
   <label class="form-check-label" for="exampleRadios1">
     2/3 Door
   </label>
 </div></div>
         <div class="col-4"><div class="form-check">
-  <input class="form-check-input" type="radio" name="door" id="door" value="4/5">
+  <input class="form-check-input" type="radio" name="door" id="door" value="4/5" {% if app.request.query.get("door") == '4/5' %} checked{% endif %}>
   <label class="form-check-label" for="exampleRadios1">
     4/5 Door
   </label>
@@ -89,11 +104,16 @@
 
   <div class="col-4">
      <div class="form-group">
-      <input id="price" class="form-control" value="" name="price" placeholder="Price under">
+      <input id="price" class="form-control  custom-select-sm" value="{% if app.request.query.get("price") !='' %} {{app.request.query.get("price")}}{% endif %}" name="price" placeholder="Price under">
       </input>
     </div>
     <div class="form-group">
-      <select id="fuel" class="form-control" name="fuel">
+      <select id="fuel" class="form-control custom-select-sm" name="fuel">
+
+             {% if app.request.query.get("fuel") !='' %} <option value="{{app.request.query.get("fuel")}}">{{app.request.query.get("fuel")}}</option>{% else %}
+
+           {% endif %}
+
         <option value>Fuel</option>
         <option value="gasoline">Gasoline</option>
         <option value="diesel">Diesel</option>
@@ -102,7 +122,7 @@
         <option value="electro">Electro</option>
       </select>
     </div>
-     <button type="submit" class="btn btn-primary">Search</button>
+     <button type="submit" class="btn btn-primary btn-sm">Search</button>
   </div>
   </div>
 </form>

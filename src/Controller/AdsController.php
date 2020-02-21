@@ -30,7 +30,6 @@ class AdsController extends AbstractController {
 			'count' => $adsRepository->findAll(),
 			'ads' => $adsRepository->findBy([], ['id' => 'DESC'], 12, $pagination),
 			'models' => $modelsRepository->findAll(),
-			'pagination' => 'index'
 		]);
 	}
 
@@ -63,6 +62,7 @@ class AdsController extends AbstractController {
 		}
 
 		unset($query['yearfrom'], $query['yearto'], $query['price'], $query['mileage'], $query['sort']);
+
 		foreach ($query as $key => $value) {
 			if ($value == "") {
 				unset($query[$key]);}
@@ -93,7 +93,6 @@ class AdsController extends AbstractController {
 			'count' => $ads,
 			'ads' => array_slice($ads, $pagination, 12),
 			'models' => $modelsRepository->findAll(),
-			'pagination' => 'search',
 		]);
 	}
 
@@ -254,9 +253,6 @@ class AdsController extends AbstractController {
 	 */
 	public function favorites(AdsRepository $adsRepository, UserRepository $userRepository): Response{
 		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
-		// if (!empty($pagination)) {
-		// 	$pagination = $pagination * 12;
-		// }
 		$ads = explode(',', $user->getFavorites());
 		$test = [];
 		foreach ($ads as $key => $value) {

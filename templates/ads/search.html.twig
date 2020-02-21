@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-8">
                         <div>{{ad.year}}.  |  {{ad.mileage}}km  |  {{ad.fuel}}  |  {{ad.body}}</div>
-                        <div>  {{ad.hp}} ks, {{ad.gearchange}}, {{ad.aircon}}</div>
+                        <div>  {{ad.hp}} ks, {{ad.gearchange}}, {{ad.aircon}} Air conditioning</div>
                         <div>{{ad.door}} doors, {{ad.seats}} seats, {{ad.insurance}}</div>
                        <div>{{ad.mileage}} km</div>
                     </div>
@@ -60,14 +60,12 @@
             </div>
         {% endfor %}
     </div>
-        {% if pagination == 'index' %}{% set var = 'ads_index' %}{% else %}
-            {% set var = 'search' %}
-            {% endif %}
+
                 <div class="d-flex justify-content-center">
         {% if count is defined and count|length > 12  %}
             {% for i in 1..((count|length) / 12) | round(0, 'ceil') %}
             {% if i >= 1 and count|length > 0 %}
-                <a class="btn btn-info px-3" href="{{ path(var, {'pagination': i-1}) }}?{{ app.request.querystring }}">{{i}}</a>
+                <a class="btn btn-info px-3" href="{{ path('search', {'pagination': i-1}) }}?{{ app.request.querystring }}">{{i}}</a>
             {% endif %}
             {% endfor %}
         {% endif %}

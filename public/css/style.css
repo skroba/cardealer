@@ -1,3 +1,26 @@
+
+.body{
+	background-color: rgba(241,164,26,0.03);
+}	
+	.bluecol {
+	color:rgb(0, 86, 179);
+}
+.container{
+	border-left: 1px solid rgb(241, 164, 26);
+	border-right: 1px solid rgb(241, 164, 26);
+	
+}
+.frontprice{
+	display:block;
+	color:white;
+	background-color:rgba(241,164,26,0.1);
+}
+.priceindex{
+	color:white;
+	display: block;
+	text-shadow: 1px 1px #07a;
+	background-color: rgba(241,164,26,0.4);
+}
 .footer{
 	background:   #e7e1e0  ;
 	margin-top: 15px;
@@ -5,7 +28,12 @@
 .item-text{
 	font-size: 18px;
 	margin: 3px;
-
+}
+.payellow{
+	color:rgb(241, 164, 26);
+}
+.pared{
+	color:red;
 }
 
 ul{list-style: none;}
@@ -22,4 +50,7 @@ ul{list-style: none;}
 		background:#e7e1e0;
 		text-decoration: none;
 		color:white;
+}
+.adsection{
+	color:rgb(241, 164, 26);
 }

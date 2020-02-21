@@ -8,27 +8,29 @@
     <div class="row">
 
         {% for ad in ads %}
-            <div class="col-3 my-2" style="border:1px solid cornsilk" >  
-                <div style="background: #f5f5f5" class="div">
-                    <p class="item-text">{{ad.maker ~ ' ' ~ ad.model}} <strong class="float-right">{{ad.price}}</strong></p>
-                    <a href="{{ path('ads_show', {'id': ad.id}) }}">
-                <img style="width: auto; height: 180px;" 
-    class="w-100" src="{% if ad.pictures[0] is defined %}{{ asset('images/')}}{{  ad.pictures[0] }}
-    {% else %}https://image.shutterstock.com/image-illustration/black-linear-photo-camera-logo-260nw-1412111903.jpg{% endif %}" alt="">
-            </a>
-                </div>
+        <div class="col-3 p-2">
+       <a class="" href="{{ path('ads_show', {'id': ad.id}) }}"> 
+         <p class="item-text"><strong class="float-right priceindex">{{ad.price}} €</strong></p> 
+            <div style="width:100%;height:200px; background-size:cover;   background-position:center; background-image: url({% if ad.pictures[0] is defined %}{{ asset('images/')}}{{  ad.pictures[0] }}
+    {% else %}https://image.shutterstock.com/image-illustration/black-linear-photo-camera-logo-260nw-1412111903.jpg{% endif %})"> 
+     
+             
+          <div class="" style="width:269px; height:30%;position:absolute;bottom:7px; background-color:rgba(241,164,26,0.4);">
 
+            <div><h4 class="text-center" style="color:white; text-shadow: 1px 1px #000;">{{ad.maker}} {{ad.model}} </h4></div>
+            <div><h5 class="text-center" style="color:white; text-shadow: 1px 1px #000;">{{ad.mileage}} Km</h5></div>
+        </div>  
             </div>
+            </a>
+        </div>
+    
         {% endfor %}
     </div>
-        {% if pagination == 'index' %}{% set var = 'ads_index' %}{% else %}
-            {% set var = 'search' %}
-            {% endif %}
                 <div class="d-flex justify-content-center">
         {% if count is defined and count|length > 12  %}
             {% for i in 1..((count|length) / 12) | round(0, 'ceil') %}
             {% if i >= 1 and count|length > 0 %}
-                <a class="btn btn-info px-3" href="{{ path(var, {'pagination': i-1}) }}?{{ app.request.querystring }}">{{i}}</a>
+                <a class="btn btn-info px-3" href="{{ path('ads_index', {'pagination': i-1}) }}?{{ app.request.querystring }}">{{i}}</a>
             {% endif %}
             {% endfor %}
         {% endif %}

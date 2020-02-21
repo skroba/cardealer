@@ -6,9 +6,11 @@
 
 
 <h4>User {{message.sender}} sent message on {{message.timestamp|date('Y-m-d H:i:s')}} </h4>
-<p>{{car}}</p> 
+{% if car is defined %}<p>{{car}}</p> {% else %}<p>Ad is removed from site!</p>
+    {% endif %}
+
 <p>{{message.text}}</p> 
-<a class="btn btn-success" href="{{ path('message.create', {'id': message.ad}) }}">Reply</a>
+<a class="btn btn-success" href="{{ path('message.reply', {'id': message.ad, 'sender':sender.id}) }}">Reply</a>
 
 {% endblock %}
 

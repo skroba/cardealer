@@ -23,13 +23,17 @@ class MessageController extends AbstractController {
 		foreach ($messages as $message) {
 			$sender = $userRepository->findOneBy(['id' => $message->getSender()]);
 			$car = $adsRepository->findOneBy(['id' => $message->getAd()]);
+			if (!empty($car)) {
+				$message->setSender($sender->getUsername());
+				$message->setAd($car->getMaker() . ' ' . $car->getModel());
+			}
+
 			// dump($car);die;
 			if ($message->getSeen() == 0) {
 				$seen++;
 
 			}
-			$message->setSender($sender->getUsername());
-			$message->setAd($car->getMaker() . ' ' . $car->getModel());
+
 		}
 
 		return $this->render('message/index.html.twig', ['messages' => $messages, 'seen' => $seen]);
@@ -78,23 +82,74 @@ class MessageController extends AbstractController {
 
 		if ($messages->getSender() == $this->getUser()->getId() || $messages->getReceiver() == $this->getUser()->getId()) {
 
+			//stavi seen na true(poruka je vidjena)
 			$entityManager = $this->getDoctrine()->getManager();
 			$messages->setSeen(true);
 			$entityManager->persist($messages);
 			$entityManager->flush();
-			$car = $adsRepository->findOneBy(['id' => $messages->getAd()]);
-			$sender = $userRepository->findOneBy(['id' => $messages->getSender()]);
-			$messages->setSender($sender->getUsername());
-			$car = $car->getMaker() . ' ' . $car->getModel();
 
-			return $this->render('message/show.html.twig', [
-				'message' => $messages,
-				'car' => $car,
-			]);
+			$car = $adsRepository->findOneBy(['id' => $messages->getAd()]);
+			if (!empty($car)) {
+				$car = $car->getMaker() . ' ' . $car->getModel();
+				$sender = $userRepository->findOneBy(['id' => $messages->getSender()]);
+				$messages->setSender($sender->getUsername());
+
+				return $this->render('message/show.html.twig', [
+					'message' => $messages,
+					'car' => $car,
+					'sender' => $sender,
+				]);
+			} else {
+
+				$sender = $userRepository->findOneBy(['id' => $messages->getSender()]);
+				$messages->setSender($sender->getUsername());
+				return $this->render('message/show.html.twig', [
+					'message' => $messages,
+					'sender' => $sender,
+				]);
+
+			}
+
 		} else {
-			dump('Nemas pravo da citas');
+			return $this->redirectToRoute('app_login');
 		}
 
+	}
+
+	/**
+	 * @Route("/message/{id}/{sender?}", name="message.reply")
+	 */
+	public function reply(Request $request, $id, AdsRepository $adsRepository, $sender) {
+		$receiver = $adsRepository->findOneBy(['id' => $id]);
+
+		$message = new Messages;
+		$message->setReceiver($sender);
+		$message->setSender($this->getUser()->getId());
+		$message->setAd($id);
+		$message->setTimestamp(new \DateTime());
+		$message->setSeen(false);
+		$form = $this->createFormBuilder($message)
+			->add('text', TextType::class)
+			->add('save', SubmitType::class, ['label' => 'Send Message'])
+			->getForm();
+
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$entityManager = $this->getDoctrine()->getManager();
+
+			$entityManager->persist($message);
+			$entityManager->flush();
+
+			return $this->render('message/create.html.twig', [
+				'form' => $form->createView(),
+				'message' => 'Message sent successfully',
+			]);
+		}
+
+		return $this->render('message/create.html.twig', [
+			'form' => $form->createView(),
+		]);
 	}
 
 	/**
@@ -127,7 +182,7 @@ class MessageController extends AbstractController {
 			}
 		}
 		if ($seen > 0) {
-			$data = $seen . ' messages';
+			$data = $seen . ' new messages';
 		} else {
 			$data = '';
 		}
