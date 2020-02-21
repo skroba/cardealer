@@ -249,6 +249,25 @@ class AdsController extends AbstractController {
 	}
 
 	/**
+	 * @Route("/imageprofile/{id}/{image}", name="ads_image_profile")
+	 */
+	public function imageProfile($id, $image, AdsRepository $adsRepository): Response{
+		$ad = $adsRepository->findOneBy(['id' => $id]);
+
+		$pictures = $ad->getPictures();
+		array_unshift($pictures, $pictures[$image]);
+		unset($pictures[$image + 1]);
+		$pictures = array_values($pictures);
+		$ad->setPictures(array_values($pictures));
+		$entityManager = $this->getDoctrine()->getManager();
+		$entityManager->persist($ad);
+		$entityManager->flush();
+		$lastid = $ad->getId();
+
+		return $this->redirectToRoute('ads_edit', ['id' => $ad->getId()]);
+	}
+
+	/**
 	 * @Route("/favorites/", name="allfavorites", methods={"GET"})
 	 */
 	public function favorites(AdsRepository $adsRepository, UserRepository $userRepository): Response{

@@ -10,8 +10,11 @@
     {% for picture in ad.pictures %}
     <div class="col-3 p-2"><img style="max-width: 200px; height: auto;" 
     class="w-100" src="{{ asset('images/')}}{{  picture }}" alt="">
+    <div><a class="btn btn-danger btn-sm" href="{{ path('ads_image_delete', {'id':ad.id, 'image': i})  }}">Delete</a>
+<a class="btn btn-success btn-sm" href="{{ path('ads_image_profile', {'id':ad.id, 'image': i})  }}">Make profile</a></div>
+</div>
 
-<a class="btn btn-danger btn-sm" href="{{ path('ads_image_delete', {'id':ad.id, 'image': i})  }}">Delete</a></div>
+
       {% set i = i+1 %}
     {% endfor %}
     {% endif %}
