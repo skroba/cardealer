@@ -1,13 +1,36 @@
-.body{
-	background-color: rgba(241,164,26,0.03);
-}	
-	.bluecol {
+
+ul{list-style: none;}
+.levo{
+	float: left;
+	position: fixed;
+	left: 0px;
+	width: 16%;
+	height: 100%;
+	z-index: -10;
+	background-image: url(https://si.adocean.pl/files/x/kjp/rjrnini/ubqqhsgonq/Pozadinski-zid-desno.jpg);
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+.desno{
+	float: right;
+	width: 16%;
+	position: fixed;
+	right: 0px;
+	height: 100%;
+	z-index: -10;
+	background-image: url(https://si.adocean.pl/files/x/kjp/rjrnini/xajkevmjdv/Pozadinski-zid-levo.jpg);
+	background-repeat: no-repeat;
+	background-position: center right;
+}		
+.bluecol {
 	color:rgb(0, 86, 179);
 }
+
 .container{
+	  background-color: white;
+	  z-index: 100;
 	border-left: 1px solid rgb(241, 164, 26);
-	border-right: 1px solid rgb(241, 164, 26);
-	
+	border-right: 1px solid rgb(241, 164, 26);	
 }
 .frontprice{
 	display:block;
@@ -17,16 +40,18 @@
 .priceindex{
 	color:white;
 	display: block;
-	text-shadow: 1px 1px #07a;
+	text-shadow: 1px 1px #000;
 	background-color: rgba(241,164,26,0.4);
 }
 .footer{
 	background:   #e7e1e0  ;
 	margin-top: 15px;
+	color:white;
+	background-image: linear-gradient(170deg, rgb(85, 85, 85) 0px, rgb(0, 0, 0) 100%)
+
 }
 .item-text{
 	font-size: 18px;
-	margin: 3px;
 }
 .payellow{
 	color:rgb(241, 164, 26);
@@ -35,21 +60,43 @@
 	color:red;
 }
 
-ul{list-style: none;}
-
 .footerbtn a{
-	background:   #bdb9b8   ;
-	color:black;
+	background-color: rgba(0, 0, 0, 0.6);
+	color:white;
 	display: block;
 	text-align: center;
-	padding: 5px;
+	padding:5px;
+	border: 1px solid rgb(85, 85, 85);
 	margin: 10px;
 }
 .footerbtn a:hover{
-		background:#e7e1e0;
-		text-decoration: none;
-		color:white;
+	background-color: rgba(0, 0, 0, 0.2);
+	border: 1px solid rgba(241,164,26,0.4);
+	text-decoration: none;
+	color:white;
 }
 .adsection{
 	color:rgb(241, 164, 26);
+}
+
+h3,h4,h5, .footer a{
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+ .footer h3{
+ 	padding-top: 1em;
+ 	padding-left: 1em;
+	color: rgba(241,164,26,0.8);
+}
+.footer a{
+	color:white;
+}
+.searchitem{
+	background-color:rgba(241,164,26,0.5);
+}
+.searchitem-body{
+	background-color:rgba(241,164,26,0.1);
+}
+.navbar{
+	background-image: linear-gradient(0deg, rgba(241,164,26,0.4) 0px, rgba(241,164,26,0.6) 100%)
 }

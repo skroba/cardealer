@@ -4,7 +4,21 @@
 
 {% block body %}
 <div class="row">
-    <div class="col-8">
+    <div class="col-sm-8">
+
+  <div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{path('ads_index')}}"><i class="fas fa-home"></i> Home</a></li>
+      <li class="breadcrumb-item"><a href="{{path('search', {'maker':ad.maker})}}">{{ad.maker}}</a></li>
+      <li class="breadcrumb-item"><a href="{{path('search', {'maker':ad.maker, 'model':ad.model})}}">{{ad.model}}</a></li>
+      <li class="breadcrumb-item"><a href="{{path('search', {'maker':ad.maker,'model':ad.model, 'body':ad.body})}}">{{ad.body|title}}</a></li>
+      <li class="breadcrumb-item"><a href="{{path('search', {'maker':ad.maker,'model':ad.model, 'body':ad.body, 'fuel':ad.fuel})}}">{{ad.fuel|title}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ad.label|title}}</li>
+    </ol>
+  </nav>
+  </div>
+
       {% if ad.pictures[0] is defined %}
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
@@ -58,7 +72,7 @@
 
      {{ad.about}}
 </div>
-<div class="col-4 ">
+<div class="col-sm-4 ">
   
   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -66,7 +80,7 @@
 
           <hr>
     <h3 class="adsection">Specs</h3>
-    <strong style="color:red;font-size: 1.3em">{{ad.maker}} {{ad.model}} {{ad.label}}</strong>
+    
 
     <ul style="list-style: none;">
         <li>Price:<strong> {{ad.price}}</strong> eur</li>
@@ -84,9 +98,9 @@
     <hr>
     <h3 class="adsection">Contact</h3>
     <ul>
-      <li>{{contact.username}}</li>
+      <li>{{contact.username|title}}</li>
       <li>{{contact.telephone}}</li> 
-      <li>{{contact.address}}</li> 
+      <li>{{contact.address|title}}</li> 
     </ul>
     {% if app.user.id is defined and app.user.id != ad.contact %} <a class="btn btn-secondary" 
     href="{{ path('message.create', {'id': ad.id}) }}">Send Message <i class="far fa-envelope"></i></a>{% endif %}

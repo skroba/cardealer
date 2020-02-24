@@ -1,8 +1,8 @@
 
 <form action="/cardealer/public/index.php/ads/search" method="GET">
-  <div class="row my-2">
+  <div class="row my-2 py-2">
 
-  <div class="col-4">
+  <div class="col-sm-4">
      <div class="form-group">
       <select id="maker" class="form-control custom-select-sm" name="maker""
        onChange="getModels(this.value);" onchange="location.reload()">
@@ -20,7 +20,7 @@
 
       <div class="col-6"><div class="form-group">
       <select id="yearfrom" class="form-control custom-select-sm" name="yearfrom">
-        <option value="">1934</option>
+        <option value="">Made From</option>
         {% for i in range(2020, 1935) %}
             <option value ="{{i}}">{{i}}</option>
         {% endfor %}
@@ -29,7 +29,7 @@
     </div>
       <div class="col-6"><div class="form-group">
       <select id="yearto" class="form-control custom-select-sm" name="yearto">
-        <option value="">2020</option>
+        <option value="">Made Before</option>
               {% for i in range(2020, 1935) %}
             <option value="{{i}}">{{i}}</option>
         {% endfor %}
@@ -56,7 +56,7 @@
   </div>
 
 
-  <div class="col-4">
+  <div class="col-sm-4">
      <div class="form-group">
       <select id="model" class="form-control  custom-select-sm" name="model">
              {% if app.request.query.get("model") !='' %} <option value="{{app.request.query.get("model")}}">{{app.request.query.get("model")}}</option>{% else %}
@@ -102,7 +102,7 @@
   </div>
 
 
-  <div class="col-4">
+  <div class="col-sm-4">
      <div class="form-group">
       <input id="price" class="form-control  custom-select-sm" value="{% if app.request.query.get("price") !='' %} {{app.request.query.get("price")}}{% endif %}" name="price" placeholder="Price under">
       </input>

@@ -11,11 +11,19 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <title>{% block title %}Welcome!{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet"> 
   </head>
   <body>
     <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
+
   	<div class="container">
+      <div class="commercial">
+            <div class="levo"></div>
+            <div class="desno"></div>
+      </div>
+
+
   		{% include './assets/navbar.html.twig' %}
         {% block body %}{% endblock %}
       {% include './assets/footer.html.twig' %}
