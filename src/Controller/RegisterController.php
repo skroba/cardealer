@@ -222,9 +222,12 @@ class RegisterController extends AbstractController {
 			$a = new User;
 		}
 
-		// if (($key = array_search($id, $test)) !== false) {
-		// 	return $this->redirectToRoute('allfavorites');
-		// }
+		if (isset($a->$vehicle)) {
+			if (($key = array_search($id, $a->$vehicle)) !== false) {
+				return $this->redirectToRoute($vehicle . 'favorites');
+			}
+		}
+
 		$a->$vehicle[] = $id;
 
 		$a = json_encode($a);
@@ -233,7 +236,7 @@ class RegisterController extends AbstractController {
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($user);
 		$em->flush();
-		return $this->redirectToRoute('allfavorites');
+		return $this->redirectToRoute($vehicle . 'favorites');
 	}
 
 	/**
@@ -246,12 +249,15 @@ class RegisterController extends AbstractController {
 		if (($key = array_search($id, $a->$vehicle)) !== false) {
 			unset($a->$vehicle[$key]);
 		}
-		$user->setFavorites(json_encode($a));
+		$a->$vehicle = array_values($a->$vehicle);
+		$a = json_encode($a);
+
+		$user->setFavorites($a);
 
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($user);
 		$em->flush();
-		return $this->redirectToRoute('allfavorites');
+		return $this->redirectToRoute($vehicle . 'favorites');
 	}
 
 }

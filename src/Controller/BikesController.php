@@ -176,7 +176,7 @@ class BikesController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/{id}", name="bikes_show", methods={"GET"})
+	 * @Route("/{id}", name="bikes_show", methods={"GET"}, requirements={"id":"\d+"})
 	 */
 	public function show(Bikes $bike, userRepository $userRepository, $id): Response{
 		$fav = '';
@@ -310,5 +310,26 @@ class BikesController extends AbstractController {
 		$lastid = $ad->getId();
 
 		return $this->redirectToRoute('bikes_edit', ['id' => $ad->getId()]);
+	}
+	/**
+	 * @Route("/favorites/", name="bikesfavorites", methods={"GET"})
+	 */
+	public function favorites(BikesRepository $bikesRepository, UserRepository $userRepository): Response{
+		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
+		$ads = json_decode($user->getFavorites());
+		// dump($ads->cars);die;
+		// $a = json_decode($ads);
+		// die($ads);
+		$bikes = [];
+
+		if (isset($ads->bikes)) {
+			foreach ($ads->bikes as $key => $value) {
+				$bikes = array_merge($bikes, $bikesRepository->findBy(['id' => $value]));
+			}
+		}
+		// dump($test);die;
+		return $this->render('bikes/favorites.html.twig', [
+			'bikes' => array_reverse($bikes),
+		]);
 	}
 }

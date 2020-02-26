@@ -287,7 +287,7 @@ class AdsController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/favorites/", name="allfavorites", methods={"GET"})
+	 * @Route("/favorites/", name="carsfavorites", methods={"GET"})
 	 */
 	public function favorites(AdsRepository $adsRepository, BikesRepository $bikesRepository, UserRepository $userRepository): Response{
 		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
@@ -295,24 +295,16 @@ class AdsController extends AbstractController {
 		// dump($ads->cars);die;
 		// $a = json_decode($ads);
 		// die($ads);
-		$test = [];
+		$cars = [];
 
 		if (isset($ads->cars)) {
 			foreach ($ads->cars as $key => $value) {
-				$test = array_merge($test, $adsRepository->findBy(['id' => $value]));
+				$cars = array_merge($cars, $adsRepository->findBy(['id' => $value]));
 			}
 		}
-		if (isset($ads->bikes)) {
-			foreach ($ads->bikes as $key => $value) {
-				$test = array_merge($test, $bikesRepository->findBy(['id' => $value]));
-			}
-		}
-
 		// dump($test);die;
 		return $this->render('ads/favorites.html.twig', [
-
-			'ads' => array_reverse($test),
-
+			'cars' => array_reverse($cars),
 		]);
 	}
 }
