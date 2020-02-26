@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Vehicle</th>
                 <th>Maker</th>
                 <th>Model</th>
                 <th>actions</th>
@@ -18,6 +19,7 @@
         {% for model in models %}
             <tr>
                 <td>{{ model.id }}</td>
+                <td>{{ model.vehicle }}</td>
                 <td>{{ model.maker }}</td>
                 <td>{{ model.model }}</td>
                 <td>

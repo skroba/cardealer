@@ -1,0 +1,86 @@
+
+<form action="/cardealer/public/index.php/bikes/search" method="GET">
+  <div class="row my-2 py-2">
+
+  <div class="col-sm-4">
+     <div class="form-group">
+      <select id="maker" class="form-control custom-select-sm" name="maker""
+       onChange="getModels(this.value);" onchange="location.reload()">
+       {% if app.request.query.get("maker") !='' %} <option value="{{app.request.query.get("maker")}}">{{app.request.query.get("maker")}}</option>{% else %}
+        <option value="">Choose maker</option>
+           {% endif %}
+       
+                {% for make in models %}
+        <option value="{{ make.maker }}">{{ make.maker }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="row">
+
+      <div class="col-6"><div class="form-group">
+      <select id="yearfrom" class="form-control custom-select-sm" name="yearfrom">
+       {% if app.request.query.get("yearfrom") !='' %} <option value="{{app.request.query.get("yearfrom")}}">{{app.request.query.get("yearfrom")}}</option>{% else %}
+        <option value="">Made After</option>
+           {% endif %}
+        {% for i in range(2020, 1935) %}
+            <option value ="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    </div>
+      <div class="col-6"><div class="form-group">
+      <select id="yearto" class="form-control custom-select-sm" name="yearto">
+       {% if app.request.query.get("yearto") !='' %} <option value="{{app.request.query.get("yearto")}}">{{app.request.query.get("yearto")}}</option>{% else %}
+        <option value="">Made Before</option>
+           {% endif %}
+              {% for i in range(2020, 1935) %}
+            <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+    </div></div>
+
+    </div>
+  
+  </div>
+
+
+  <div class="col-sm-4">
+     <div class="form-group">
+      <select id="model" class="form-control  custom-select-sm" name="model">
+              <option value="">Choose type</option>
+              <option value="Scooter">Scooter</option>
+              <option value="Naked">Naked</option>Chopper
+              <option value="Sport">Sport</option>
+               <option value="Enduro">Enduro</option>
+              <option value="Chopper">Chopper</option>
+              <option value="Cross">Cross</option>
+               <option value="Oldtimer">Oldtimer</option>
+      </select>
+    </div>
+       <div class="form-group">
+      <select id="mileage" class="form-control  custom-select-sm" name="mileage">
+
+             {% if app.request.query.get("mileage") !='' %} <option value="{{app.request.query.get("mileage")}}">{{app.request.query.get("mileage")}}</option>{% else %}
+           {% endif %}
+
+
+        <option value="">Miles under</option>
+        <option value="50000">50000</option>
+        <option value="100000">100000</option>
+        <option value="150000">150000</option>
+        <option value="200000">200000</option>
+        <option value="250000">250000</option>
+        <option value="300000">300000</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-sm-4">
+     <div class="form-group">
+      <input id="price" class="form-control  custom-select-sm" value="{% if app.request.query.get("price") !='' %} {{app.request.query.get("price")}}{% endif %}" name="price" placeholder="Price under">
+      </input>
+    </div>
+     <button type="submit" class="btn btn-primary btn-sm">Search</button>
+  </div>
+  </div>
+</form>

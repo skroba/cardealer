@@ -3,11 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ModelsRepository")
- * @UniqueEntity("maker")
  */
 class Models {
 	/**
@@ -16,6 +14,11 @@ class Models {
 	 * @ORM\Column(type="integer")
 	 */
 	private $id;
+
+	/**
+	 * @ORM\Column(type="string", length=255)
+	 */
+	private $vehicle;
 
 	/**
 	 * @ORM\Column(type="string", length=255)
@@ -53,5 +56,15 @@ class Models {
 
 	public function __toString() {
 		return $this->getMaker();
+	}
+
+	public function getVehicle() :  ? string {
+		return $this->vehicle;
+	}
+
+	public function setVehicle(string $vehicle) : self{
+		$this->vehicle = $vehicle;
+
+		return $this;
 	}
 }

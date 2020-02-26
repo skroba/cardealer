@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\Messages;
 use App\Repository\AdsRepository;
+use App\Repository\BikesRepository;
 use App\Repository\MessagesRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,8 +43,11 @@ class MessageController extends AbstractController {
 	/**
 	 * @Route("/message/{id?}/new", name="message.create")
 	 */
-	public function create(Request $request, $id, AdsRepository $adsRepository) {
+	public function create(Request $request, $id, AdsRepository $adsRepository, BikesRepository $bikesRepository) {
 		$receiver = $adsRepository->findOneBy(['id' => $id]);
+		if (empty($receiver)) {
+			$receiver = $bikesRepository->findOneBy(['id' => $id]);
+		}
 
 		$message = new Messages;
 		$message->setReceiver($receiver->getContact());
@@ -78,7 +82,7 @@ class MessageController extends AbstractController {
 	/**
 	 * @Route("/message/{messages}", name="message.show", methods={"GET"})
 	 */
-	public function show(Messages $messages, UserRepository $userRepository, AdsRepository $adsRepository): Response {
+	public function show(Messages $messages, UserRepository $userRepository, AdsRepository $adsRepository, BikesRepository $bikesRepository): Response {
 
 		if ($messages->getSender() == $this->getUser()->getId() || $messages->getReceiver() == $this->getUser()->getId()) {
 
@@ -89,6 +93,9 @@ class MessageController extends AbstractController {
 			$entityManager->flush();
 
 			$car = $adsRepository->findOneBy(['id' => $messages->getAd()]);
+			if (empty($car)) {
+				$car = $bikesRepository->findOneBy(['id' => $messages->getAd()]);
+			}
 			if (!empty($car)) {
 				$car = $car->getMaker() . ' ' . $car->getModel();
 				$sender = $userRepository->findOneBy(['id' => $messages->getSender()]);

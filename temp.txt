@@ -117,3 +117,34 @@ http://localhost/cardealer/public/index.php/ads/search?maker=&yearfrom=&yearto=&
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Department of the Interior (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+for bikes:
+
+
+maker,
+model,
+label,
+volume,
+hp
+cylinders,
+cooling,
+transmission,
+price,
+mileage,
+year,
+color,
+insurance,
+pictures[],
+equipment[]
+about,
+contact,
+added
+
+
+{"cars":["1","2","3","43"],"bikes":["1","2","4"]}
+
+{"0":"1","1":"2","2":"3","4":"42"},"bikes":["26"]}
+
+{"cars":{"1":"42","2":"38"},"bikes":["25"]}
+
+{"cars":["1","2","3","43","42","37"],"bikes":["1","2","4","26"]}

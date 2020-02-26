@@ -27,8 +27,8 @@ ul{list-style: none;}
 }
 
 .container{
-	  background-color: white;
-	  z-index: 100;
+	background-color: white;
+	z-index: 100;
 	border-left: 1px solid rgb(241, 164, 26);
 	border-right: 1px solid rgb(241, 164, 26);	
 }
@@ -65,9 +65,9 @@ ul{list-style: none;}
 	color:white;
 	display: block;
 	text-align: center;
-	padding:5px;
+
 	border: 1px solid rgb(85, 85, 85);
-	margin: 10px;
+
 }
 .footerbtn a:hover{
 	background-color: rgba(0, 0, 0, 0.2);
@@ -99,4 +99,13 @@ h3,h4,h5, .footer a{
 }
 .navbar{
 	background-image: linear-gradient(0deg, rgba(241,164,26,0.4) 0px, rgba(241,164,26,0.6) 100%)
+}
+
+
+@media (min-width: 900px) {
+
+	.footerbtn a{
+		padding:5px;
+		margin: 10px;
+	}
 }

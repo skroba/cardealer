@@ -1,3 +1,15 @@
+{% if app.request.pathinfo starts with '/cars' %} 
+{% set vehicle = 'cars' %}
+{% endif %}
+
+{% if app.request.pathinfo starts with '/bikes' %} 
+{% set vehicle = 'bikes' %}
+{% endif %}
+
+{% if app.request.pathinfo starts with '/trucks' %} 
+{% set vehicle = 'trucks' %}
+{% endif %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Ads{% endblock %}
@@ -106,22 +118,22 @@
     href="{{ path('message.create', {'id': ad.id}) }}">Send Message <i class="far fa-envelope"></i></a>{% endif %}
     {% if app.user.id is defined and app.user.id == ad.contact %}<a class="btn btn-warning" 
     href="{{ path('ads_edit', {'id': ad.id}) }}">Edit <i class="far fa-edit"></i></a>{% endif %}
-   
-        
+
         
          {% if app.user.id is defined %}
 
            {% set foo = app.user.favorites|split(',') %}
 
-             {% if ad.id in foo %}
+
+             {% if favorites %}
              <a class="btn btn-danger" 
-            href="{{ path('favoriteremove', {'id': ad.id}) }}">Remove From Favorites <i class="far fa-star-half"></i></a>
+            href="{{ path('favoriteremove', {'vehicle':vehicle, 'id': ad.id}) }}">Remove From Favorites <i class="far fa-star-half"></i></a>
 
 
           {% else %}
 
                <a class="btn btn-success" 
-               href="{{ path('favoriteadd', {'id': ad.id}) }}">Add To Favorites <i class="far fa-star"></i></a>
+               href="{{ path('favoriteadd', {'vehicle':vehicle, 'id': ad.id}) }}">Add To Favorites <i class="far fa-star"></i></a>
           {% endif %}
             {% endif %}
 

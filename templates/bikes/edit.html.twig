@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Ads{% endblock %}
+
+{% block body %}
+    <h1>Edit Ad {{ad.maker}} {{ad.model}} {{ad.label}}</h1>
+    <div class="row">
+    	{% set i = 0 %}
+    	{% if ad.pictures is defined  %}
+    {% for picture in ad.pictures %}
+    <div class="col-3 p-2"><img style="max-width: 200px; height: auto;" 
+    class="w-100" src="{{ asset('images/')}}{{  picture }}" alt="">
+    <div><a class="btn btn-danger btn-sm" href="{{ path('bikes_image_delete', {'id':ad.id, 'image': i})  }}">Delete</a>
+<a class="btn btn-success btn-sm" href="{{ path('bikes_image_profile', {'id':ad.id, 'image': i})  }}">Make profile</a></div>
+</div>
+
+
+      {% set i = i+1 %}
+    {% endfor %}
+    {% endif %}
+</div>
+    {{ include('bikes/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('bikes_search', {'contact':app.user.id}) }}">back to list</a>
+
+    {{ include('bikes/_delete_form.html.twig') }}
+{% endblock %}

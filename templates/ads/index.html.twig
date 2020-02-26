@@ -3,30 +3,35 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-        {% include './assets/search.html.twig' %}
-                <h3>We have {{count|length}} ads</h3>
+        {% include './assets/car-search.html.twig' %}
+       
+               <h3>We have {{count|length}} ads</h3>
     <div class="row">
 
         {% for ad in ads %}
-        <div class="col-md-3 p-2">
-       <a  class="w-100" href="{{ path('ads_show', {'id': ad.id}) }}"> 
+        <div class="col-lg-3 col-md-6 p-2">
+       <a class="w-100" href="{{ path('ads_show', {'id': ad.id}) }}"> 
         
-            <div class="col" style="width:100%;height:220px;border:1px solid black; background-size:cover;   background-position:center; background-image: url({% if ad.pictures[0] is defined %}{{ asset('images/')}}{{  ad.pictures[0] }}
-    {% else %}https://image.shutterstock.com/image-illustration/black-linear-photo-camera-logo-260nw-1412111903.jpg{% endif %})"> 
-    <p class="item-text"><strong class="float-right priceindex">{{ad.price}} €</strong></p>
+            <div class="col" style="width:100%;height:240px; border:1px solid black; background-size:cover; background-position:center; background-image: url({% if ad.pictures[0] is defined %}{{ asset('images/')}}{{  ad.pictures[0] }}
+            {% else %}https://image.shutterstock.com/image-illustration/black-linear-photo-camera-logo-260nw-1412111903.jpg{% endif %})"> 
+
+        
+            <p style="class="item-text;"><strong class="float-right priceindex">{{ad.price}} €</strong></p>
              
-          <div style="width:100%; height:30%;position:absolute;bottom:0px; left:0px; background-color:rgba(241,164,26,0.4);">
+            <div style="width:100%; height:30%;position:absolute;bottom:0px; left:0px; background-color:rgba(241,164,26,0.4);">
 
             <div><h4 class="text-center font" style="color:white; text-shadow: 1px 1px #000;">{{ad.maker}} {{ad.model}} </h4></div>
             <div><h5 class="text-center" style="color:white; text-shadow: 1px 1px #000;">{{ad.mileage}} Km</h5></div>
 
         </div>  
             </div>
+
             </a>
         </div>
     
         {% endfor %}
     </div>
+    
                 <div class="d-flex justify-content-center p-2">
         {% if count is defined and count|length > 12  %}
             {% for i in 1..((count|length) / 12) | round(0, 'ceil') %}
@@ -36,4 +41,5 @@
             {% endfor %}
         {% endif %}
     </div>
+    
 {% endblock %}

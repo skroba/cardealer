@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Ads;
 use App\Form\AdsType;
 use App\Repository\AdsRepository;
+use App\Repository\BikesRepository;
 use App\Repository\ModelsRepository;
 use App\Repository\UserRepository;
 use DateTime;
@@ -15,11 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/ads")
+ * @Route("/cars")
  */
 class AdsController extends AbstractController {
 	/**
-	 * @Route("/all/{pagination?}", name="ads_index", requirements={"pagination"="\d+"}, methods={"GET"})
+	 * @Route("/index/{pagination?}", name="ads_index", requirements={"pagination"="\d+"}, methods={"GET"})
 	 */
 	public function index(AdsRepository $adsRepository, ModelsRepository $modelsRepository, $pagination): Response {
 		if (!empty($pagination)) {
@@ -29,7 +30,7 @@ class AdsController extends AbstractController {
 		return $this->render('ads/index.html.twig', [
 			'count' => $adsRepository->findAll(),
 			'ads' => $adsRepository->findBy([], ['id' => 'DESC'], 12, $pagination),
-			'models' => $modelsRepository->findAll(),
+			'models' => $modelsRepository->findBy(['vehicle' => 'car']),
 		]);
 	}
 
@@ -101,7 +102,7 @@ class AdsController extends AbstractController {
 	 */
 	public function new (Request $request, ModelsRepository $modelsRepository): Response{
 		$ad = new Ads();
-		$models = $modelsRepository->findAll();
+		$models = $modelsRepository->findBy(['vehicle' => 'car']);
 		$model = [];
 		foreach ($models as $item) {
 			$c = ([$item->getMaker() => $item->getMaker()]);
@@ -118,13 +119,16 @@ class AdsController extends AbstractController {
 			$ad->setModel($form->get('model')->getViewData());
 			$folder = $date->getTimestamp();
 
-			$manager = new ImageManager(array('driver' => 'gd'));
 			$imgjson = [];
 			foreach ($form->getData()->getPictures() as $file) {
 				$filename = md5(uniqid()) . '.' . $file->guessClientExtension();
 				$file->move($this->getParameter('uploads_dir') . '/' . $folder, $filename);
+				$manager = new ImageManager(array('driver' => 'gd'));
 				$image = $manager->make($this->getParameter('uploads_dir') . '/' . $folder . '/' . $filename)->resize(300, 200)
 					->save($this->getParameter('uploads_dir') . '/' . $folder . '/' . 'small-' . $filename);
+				$manager = $manager->make($this->getParameter('uploads_dir') . '/' . $folder . '/' . $filename);
+				$manager->insert('https://lilly021.com/wp-content/uploads/2019/02/logo2.png', 'center')->save($this->getParameter('uploads_dir') . '/' . $folder . '/' . $filename);
+				$manager = '';
 				$imgjson[] = $folder . '/' . $filename;
 
 			}
@@ -149,11 +153,24 @@ class AdsController extends AbstractController {
 	/**
 	 * @Route("/{id}", name="ads_show",requirements={"id"="\d+"}, methods={"GET"})
 	 */
-	public function show(Ads $ad, userRepository $userRepository): Response {
+	public function show(Ads $ad, userRepository $userRepository, $id): Response{
+		$fav = '';
+		if (!empty($this->getUser())) {
+			$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
+			$a = json_decode($user->getFavorites());
+
+			if (isset($a->cars) && ($key = array_search($id, $a->cars)) !== false) {
+				$fav = true;
+			}
+		} else {
+			$fav = false;
+		}
+		// dump($fav);die;
 
 		return $this->render('ads/show.html.twig', [
 			'ad' => $ad,
 			'contact' => $userRepository->findOneBy(['id' => $ad->getContact()]),
+			'favorites' => $fav,
 		]);
 	}
 
@@ -192,17 +209,19 @@ class AdsController extends AbstractController {
 				$folder = $date->getTimestamp();
 			}
 
-			$manager = new ImageManager(array('driver' => 'gd'));
 			$imgjson = [];
 			foreach ($form->getData()->getPictures() as $file) {
 				$filename = md5(uniqid()) . '.' . $file->guessClientExtension();
 				$file->move($this->getParameter('uploads_dir') . '/' . $folder, $filename);
+				$manager = new ImageManager(array('driver' => 'gd'));
 				$image = $manager->make($this->getParameter('uploads_dir') . '/' . $folder . '/' . $filename)->resize(300, 200)
 					->save($this->getParameter('uploads_dir') . '/' . $folder . '/' . 'small-' . $filename);
+				$manager = $manager->make($this->getParameter('uploads_dir') . '/' . $folder . '/' . $filename);
+				$manager->insert('https://lilly021.com/wp-content/uploads/2019/02/logo2.png', 'center')->save($this->getParameter('uploads_dir') . '/' . $folder . '/' . $filename);
+				$manager = '';
 				$imgjson[] = $folder . '/' . $filename;
 
 			}
-			dump($pictures);
 			$pictures = array_merge($pictures, $imgjson);
 			// dump($pictures);
 			// dump($pictures);die;
@@ -270,14 +289,26 @@ class AdsController extends AbstractController {
 	/**
 	 * @Route("/favorites/", name="allfavorites", methods={"GET"})
 	 */
-	public function favorites(AdsRepository $adsRepository, UserRepository $userRepository): Response{
+	public function favorites(AdsRepository $adsRepository, BikesRepository $bikesRepository, UserRepository $userRepository): Response{
 		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
-		$ads = explode(',', $user->getFavorites());
+		$ads = json_decode($user->getFavorites());
+		// dump($ads->cars);die;
+		// $a = json_decode($ads);
+		// die($ads);
 		$test = [];
-		foreach ($ads as $key => $value) {
-			$test = array_merge($test, $adsRepository->findBy(['id' => $value]));
+
+		if (isset($ads->cars)) {
+			foreach ($ads->cars as $key => $value) {
+				$test = array_merge($test, $adsRepository->findBy(['id' => $value]));
+			}
+		}
+		if (isset($ads->bikes)) {
+			foreach ($ads->bikes as $key => $value) {
+				$test = array_merge($test, $bikesRepository->findBy(['id' => $value]));
+			}
 		}
 
+		// dump($test);die;
 		return $this->render('ads/favorites.html.twig', [
 
 			'ads' => array_reverse($test),

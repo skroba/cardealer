@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bikes{% endblock %}
+
+{% block body %}
+    <h1>Bikes</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bike.id }}</td>
+            </tr>
+            <tr>
+                <th>Maker</th>
+                <td>{{ bike.maker }}</td>
+            </tr>
+            <tr>
+                <th>Model</th>
+                <td>{{ bike.model }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ bike.label }}</td>
+            </tr>
+            <tr>
+                <th>Volume</th>
+                <td>{{ bike.volume }}</td>
+            </tr>
+            <tr>
+                <th>Hp</th>
+                <td>{{ bike.hp }}</td>
+            </tr>
+            <tr>
+                <th>Cylinders</th>
+                <td>{{ bike.cylinders }}</td>
+            </tr>
+            <tr>
+                <th>Cooling</th>
+                <td>{{ bike.cooling }}</td>
+            </tr>
+            <tr>
+                <th>Transmission</th>
+                <td>{{ bike.transmission }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ bike.price }}</td>
+            </tr>
+            <tr>
+                <th>Mileage</th>
+                <td>{{ bike.mileage }}</td>
+            </tr>
+            <tr>
+                <th>Year</th>
+                <td>{{ bike.year }}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
+                <td>{{ bike.color }}</td>
+            </tr>
+            <tr>
+                <th>Insurance</th>
+                <td>{{ bike.insurance }}</td>
+            </tr>
+            <tr>
+                <th>Pictures</th>
+                <td>{{ bike.pictures ? bike.pictures|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Equipment</th>
+                <td>{{ bike.equipment ? bike.equipment|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>About</th>
+                <td>{{ bike.about }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{ bike.contact }}</td>
+            </tr>
+            <tr>
+                <th>Added</th>
+                <td>{{ bike.added ? bike.added|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('bikes_index') }}">back to list</a>
+
+    <a href="{{ path('bikes_edit', {'id': bike.id}) }}">edit</a>
+
+    {{ include('bikes/_delete_form.html.twig') }}
+{% endblock %}

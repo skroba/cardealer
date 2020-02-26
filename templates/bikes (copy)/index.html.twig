@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bikes index{% endblock %}
+
+{% block body %}
+    <h1>Bikes index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Maker</th>
+                <th>Model</th>
+                <th>Label</th>
+                <th>Volume</th>
+                <th>Hp</th>
+                <th>Cylinders</th>
+                <th>Cooling</th>
+                <th>Transmission</th>
+                <th>Price</th>
+                <th>Mileage</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>Insurance</th>
+                <th>Pictures</th>
+                <th>Equipment</th>
+                <th>About</th>
+                <th>Contact</th>
+                <th>Added</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bike in bikes %}
+            <tr>
+                <td>{{ bike.id }}</td>
+                <td>{{ bike.maker }}</td>
+                <td>{{ bike.model }}</td>
+                <td>{{ bike.label }}</td>
+                <td>{{ bike.volume }}</td>
+                <td>{{ bike.hp }}</td>
+                <td>{{ bike.cylinders }}</td>
+                <td>{{ bike.cooling }}</td>
+                <td>{{ bike.transmission }}</td>
+                <td>{{ bike.price }}</td>
+                <td>{{ bike.mileage }}</td>
+                <td>{{ bike.year }}</td>
+                <td>{{ bike.color }}</td>
+                <td>{{ bike.insurance }}</td>
+                <td>{{ bike.pictures ? bike.pictures|json_encode : '' }}</td>
+                <td>{{ bike.equipment ? bike.equipment|json_encode : '' }}</td>
+                <td>{{ bike.about }}</td>
+                <td>{{ bike.contact }}</td>
+                <td>{{ bike.added ? bike.added|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('bikes_show', {'id': bike.id}) }}">show</a>
+                    <a href="{{ path('bikes_edit', {'id': bike.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="20">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('bikes_new') }}">Create new</a>
+{% endblock %}

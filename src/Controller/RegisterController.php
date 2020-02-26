@@ -211,16 +211,23 @@ class RegisterController extends AbstractController {
 
 	}
 	/**
-	 * @Route("/favoriteadd/{id}", name="favoriteadd")
+	 * @Route("/favoriteadd/{vehicle}/{id}", name="favoriteadd")
 	 */
-	public function favoriteAdd(UserRepository $userRepository, $id) {
+	public function favoriteAdd(UserRepository $userRepository, $id, $vehicle) {
 		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
-		$a = $user->getFavorites();
-		$test = explode(',', $a);
-		if (($key = array_search($id, $test)) !== false) {
-			return $this->redirectToRoute('allfavorites');
+		$a = json_decode($user->getFavorites());
+
+		// dump($a->$vehicle);die
+		if (empty($a)) {
+			$a = new User;
 		}
-		$a .= ',' . $id;
+
+		// if (($key = array_search($id, $test)) !== false) {
+		// 	return $this->redirectToRoute('allfavorites');
+		// }
+		$a->$vehicle[] = $id;
+
+		$a = json_encode($a);
 		$user->setFavorites($a);
 
 		$em = $this->getDoctrine()->getManager();
@@ -230,17 +237,16 @@ class RegisterController extends AbstractController {
 	}
 
 	/**
-	 * @Route("/favoriteremove/{id}", name="favoriteremove")
+	 * @Route("/favoriteremove/{vehicle}/{id}", name="favoriteremove")
 	 */
-	public function favoriteRemove(UserRepository $userRepository, $id) {
+	public function favoriteRemove(UserRepository $userRepository, $id, $vehicle) {
 		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
-		$a = $user->getFavorites();
-		$test = explode(',', $a);
-		if (($key = array_search($id, $test)) !== false) {
-			unset($test[$key]);
+		$a = json_decode($user->getFavorites());
+
+		if (($key = array_search($id, $a->$vehicle)) !== false) {
+			unset($a->$vehicle[$key]);
 		}
-		$a = implode(',', $test);
-		$user->setFavorites($a);
+		$user->setFavorites(json_encode($a));
 
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($user);

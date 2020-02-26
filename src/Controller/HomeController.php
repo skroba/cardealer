@@ -12,4 +12,11 @@ class HomeController extends AbstractController {
 	public function index() {
 		return $this->redirectToRoute('ads_index');
 	}
+	/**
+	 * @Route("/create", name="create")
+	 */
+	public function create() {
+		return $this->render('home/create.html.twig', [
+		]);
+	}
 }

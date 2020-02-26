@@ -8,11 +8,11 @@
     <ul class="navbar-nav mr-auto">
        {% if app.user %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ path('ads_new') }}">Create New AD</a>
+        <a class="nav-link" href="{{ path('create') }}">Create New AD</a>
       </li>
       {% if is_granted('ROLE_ADMIN') %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ path('models_new') }}">New car</a>
+        <a class="nav-link" href="{{ path('models_new') }}">New Vehicle</a>
       </li>
       {% endif %}
        
@@ -43,11 +43,23 @@
       {% endif %}
 
     </ul>
+
+   
     <ul class="navbar-nav float-right">
       <li id="messages" class="px-2"></li>
       <li class="nav-item "><a href="{{ path('message') }}"><i class="far fa-envelope"></i></a></li> 
     </ul>
   </div>
 </nav>
+
+  <div class="row py-1 bigicons">
+   <div class="col">
+    <a class="px-2" style="  {% if app.request.pathinfo starts with '/cars' %} {{'color:rgba(241,164,26,1)'}}{% endif %}" href="{{ path('ads_index') }}"><i class="fas fa-car fa-2x"> Cars</a></i>
+    <a class="px-2" style="  {% if app.request.pathinfo starts with '/bikes' %} {{'color:rgba(241,164,26,1)'}}{% endif %}"   href="{{ path('bikes_index')}}"><i class="fas fa-motorcycle fa-2x"> Bikes</a></i>
+    <a class="px-2"  href="#"><i class="fas fa-truck fa-2x"> Trucks</i></a>
+   </div>
+  </div>
+
+
 
 
