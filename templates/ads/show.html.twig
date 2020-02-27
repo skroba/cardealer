@@ -19,6 +19,7 @@
     <div class="col-sm-8">
 
   <div>
+
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{path('ads_index')}}"><i class="fas fa-home"></i> Home</a></li>
@@ -127,7 +128,7 @@
     <h3 class="adsection">Equipment</h3>
         <div class="row">
           {% for option in ad.equipment %}
-        <div class="col-2"><h6>{{option}}</h6></div>
+        <div class="col"><h6>{{option}}</h6></div>
         {% endfor %}
         </div>
       </div>
@@ -135,7 +136,7 @@
         <div class="col-lg-6"><h3 class="adsection">Security</h3>
         <div class="row">
           {% for option in ad.security %}
-        <div class="col-2"><h6>{{option}}</h6></div>
+        <div class="col"><h6>{{option}}</h6></div>
         {% endfor %}
         </div></div>
         
@@ -146,9 +147,10 @@
     <div class="col">
         <h3 class="adsection">About</h3>
 
-     {{ad.about}}
+     <p><pre>{{ad.about}}</pre></p>
     </div>
-    </div>
+ 
+
         
 </div>
 {% endblock %}

@@ -100,6 +100,9 @@ h3,h4,h5, .footer a{
 .navbar{
 	background-image: linear-gradient(0deg, rgba(241,164,26,0.4) 0px, rgba(241,164,26,0.6) 100%)
 }
+#listprice ul li{
+	font-family: 'Roboto',sans-serif,
+}
 
 
 
@@ -110,3 +113,4 @@ h3,h4,h5, .footer a{
 		margin: 10px;
 	}
 }
+
