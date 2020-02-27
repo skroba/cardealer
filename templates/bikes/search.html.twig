@@ -30,13 +30,11 @@
 
                 
     <div class="row">
-
         {% for ad in ads %}
-            <div class="col-lg-12 p-3" >  
-                <div class="row d-block"  style="background: #f5f5f5" >
-
+            <div class="col-lg-9 p-3" >  
+      
                     <div class="searchitem">
-                        <h3 class="item-text">{{ad.maker ~ ' ' ~ ad.model}}
+                        <h3 class="item-text">{{ad.maker ~ ' ' ~ ad.label}}
                         <strong class="float-right priceindex">{{ad.price}}E</strong></h3>
                     </div>
                     <div class="row searchitem-body">
@@ -56,11 +54,7 @@
                         <div>{{ad.insurance}}</div>
                        <div>{{ad.mileage}} km</div>
                     </div>
-
                     </div>
-
-                </div>
-
             </div>
         {% endfor %}
     </div>

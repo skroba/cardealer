@@ -62,27 +62,7 @@
         <img src="https://image.shutterstock.com/image-illustration/black-linear-photo-camera-logo-260nw-1412111903.jpg" alt="">
     </div>
 {% endif %}
-        <hr>
-
-        <h3 class="adsection">Equipment</h3>
-        <div class="row">
-          {% for option in ad.equipment %}
-        <div class="col-2"><h6>{{option}}</h6></div>
-        {% endfor %}
-        </div>
-
-        <hr>
-
-        <h3 class="adsection">Security</h3>
-        <div class="row">
-          {% for option in ad.security %}
-        <div class="col-2"><h6>{{option}}</h6></div>
-        {% endfor %}
-        </div>
-        <hr>
-     <h3 class="adsection">About</h3>
-
-     {{ad.about}}
+       
 </div>
 <div class="col-sm-4 ">
   
@@ -91,11 +71,12 @@
   <div class="fb-share-button" data-href="{{ app.request.uri }}" data-layout="box_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 
           <hr>
-    <h3 class="adsection">Specs</h3>
+          <div class="col"> <div><h3 class="adsection">Specs</h3></div>
+    <div > <h4 style="color:white; background-color:rgb(196, 38, 49)">Price: {{ad.price}}e</h4></div></div>
+   
     
 
     <ul style="list-style: none;">
-        <li>Price:<strong> {{ad.price}}</strong> eur</li>
         <li>Added: {{ad.added|date('d. M Y')}}</li>
         <li>Year: {{ad.year}}</li>
         <li>MIleage: {{ad.mileage}} Km</li>
@@ -139,5 +120,35 @@
 
 
 </div>
+</div>
+<div class="row">
+   <hr>
+  <div class="col-lg-6">
+    <h3 class="adsection">Equipment</h3>
+        <div class="row">
+          {% for option in ad.equipment %}
+        <div class="col-2"><h6>{{option}}</h6></div>
+        {% endfor %}
+        </div>
+      </div>
+
+        <div class="col-lg-6"><h3 class="adsection">Security</h3>
+        <div class="row">
+          {% for option in ad.security %}
+        <div class="col-2"><h6>{{option}}</h6></div>
+        {% endfor %}
+        </div></div>
+        
+
+     
+  </div>
+    <div class="row">
+    <div class="col">
+        <h3 class="adsection">About</h3>
+
+     {{ad.about}}
+    </div>
+    </div>
+        
 </div>
 {% endblock %}

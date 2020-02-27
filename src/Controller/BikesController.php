@@ -34,29 +34,6 @@ class BikesController extends AbstractController {
 			'models' => $modelsRepository->findBy(['vehicle' => 'bike']),
 		]);
 	}
-	/**
-	 * @Route("/test", name="test", methods={"GET"})
-	 */
-	public function test(): Response{
-		// create new Intervention Image
-		$manager = new ImageManager(array('driver' => 'gd'));
-		$manager = $manager->make('http://www.localhost.test/cardealer/public/images/1582643519/746286e9615f6fcf5573b8a3d22e8b5e.jpeg');
-
-		// paste another image
-		// $img->insert('https://lilly021.com/wp-content/uploads/2019/02/logo2.png');
-
-		// create a new Image instance for inserting
-		// $watermark = Image::make('https://lilly021.com/wp-content/uploads/2019/02/logo2.png');
-		// $img->insert($watermark, 'center')->save($this->getParameter('uploads_dir') . '/small-aca.jpg');
-
-		// insert watermark at bottom-right corner with 10px offset
-		$manager->insert('https://lilly021.com/wp-content/uploads/2019/02/logo2.png', 'center')->save($this->getParameter('uploads_dir') . '/small-aca.jpg', 80, 'jpg');
-		$manager = '';
-		dump($manager);die;
-		return $this->render('bikes/show.html.twig', [
-
-		]);
-	}
 
 	/**
 	 * @Route("/search/{pagination?}", name="bikes_search", methods={"GET"})

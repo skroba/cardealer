@@ -4,7 +4,6 @@ namespace App\Controller;
 use App\Entity\Ads;
 use App\Form\AdsType;
 use App\Repository\AdsRepository;
-use App\Repository\BikesRepository;
 use App\Repository\ModelsRepository;
 use App\Repository\UserRepository;
 use DateTime;
@@ -289,7 +288,7 @@ class AdsController extends AbstractController {
 	/**
 	 * @Route("/favorites/", name="carsfavorites", methods={"GET"})
 	 */
-	public function favorites(AdsRepository $adsRepository, BikesRepository $bikesRepository, UserRepository $userRepository): Response{
+	public function favorites(AdsRepository $adsRepository, UserRepository $userRepository): Response{
 		$user = $userRepository->findOneBy(['id' => $this->getUser()->getId()]);
 		$ads = json_decode($user->getFavorites());
 		// dump($ads->cars);die;
