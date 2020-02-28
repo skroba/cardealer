@@ -39,7 +39,7 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script>
-			function getModels(val) {
+function getModels(val) {
 $.ajax({
 type: "GET",
 url: "/cardealer/public/index.php/models/api/" + val,
@@ -57,7 +57,7 @@ $.ajax({
 type: "GET",
 url: "/cardealer/public/index.php/api/messages/",
 success: function (data) {
-console.log('test');
+
 $("#messages").html(data);
 
 }
@@ -81,38 +81,45 @@ $("#ads_model").html(data);
 });
 })
 });
-		</script>
-		<script>
-			$(document).ready(function () {
+</script>
+
+<script>
+$(document).ready(function () {
 $("button").click(function () {
 $("#tel").html('<li><text>{% if contact is defined %}{{ contact.telephone }}{% endif %}</text></li>')
 });
 });
-		</script>
+</script>
+{% if contact.address is defined %}
 <script>
+var data1;
 $(document).ready(function () {
 $.ajax({
 type: "GET",
-url: "https://maps.googleapis.com/maps/api/geocode/json?address=sabac&key=AIzaSyBg-u2EHcP9e1A_dg0zeRFkUNfmHLK2wXQ",
+url: "https://maps.googleapis.com/maps/api/geocode/json?address={{contact.address}}&key=AIzaSyBg-u2EHcP9e1A_dg0zeRFkUNfmHLK2wXQ",
 success: function (data) {
-console.log(data.results[0].geometry.location);
 
+// console.log(data.results[0].geometry.location);
+data1 = data;
 }
-function initMap() {
-	  alert(data);
-  // The location of Uluru
-  // var uluru = {lat: data.results[0].geometry.location.lat, lng: data.results[0].geometry.location.lng};
-  // // The map, centered at Uluru
-  // var map = new google.maps.Map(
-  //     document.getElementById('map'), {zoom: 4, center: uluru});
-  // // The marker, positioned at Uluru
-  // var marker = new google.maps.Marker({position: uluru, map: map});
-}
-});
+}).then(initMap);
 });
 </script>
-<script>
+{% endif %}
 
+
+<script>
+// Initialize and add the map
+function initMap() {
+	console.log(data1.results[0].geometry.location.lat)
+  // The location of Uluru
+  var uluru = {lat: data1.results[0].geometry.location.lat, lng: data1.results[0].geometry.location.lng};
+  // // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 12, center: uluru});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: uluru, map: map});
+}
     </script>
     <!--Load the API from the specified URL
     * The async attribute allows the browser to render the page while the API loads
