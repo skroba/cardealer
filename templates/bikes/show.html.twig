@@ -1,130 +1,176 @@
-{% if app.request.pathinfo starts with '/cars' %} 
-{% set vehicle = 'cars' %}
+{% if app.request.pathinfo starts with '/cars' %}
+	{% set vehicle = 'cars' %}
 {% endif %}
 
-{% if app.request.pathinfo starts with '/bikes' %} 
-{% set vehicle = 'bikes' %}
+{% if app.request.pathinfo starts with '/bikes' %}
+	{% set vehicle = 'bikes' %}
 {% endif %}
 
-{% if app.request.pathinfo starts with '/trucks' %} 
-{% set vehicle = 'trucks' %}
+{% if app.request.pathinfo starts with '/trucks' %}
+	{% set vehicle = 'trucks' %}
 {% endif %}
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Ads{% endblock %}
+{% block title %}{{ad.maker}} {{ad.label}}
+{% endblock %}
 
 {% block body %}
-<div class="row">
-    <div class="col-sm-8">
 
-  <div>
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{path('ads_index')}}"><i class="fas fa-home"></i> Home</a></li>
-      <li class="breadcrumb-item"><a href="{{path('bikes_index')}}">Bikes</a></li>
-      <li class="breadcrumb-item"><a href="{{path('bikes_search', {'maker':ad.maker})}}">{{ad.maker}}</a></li>
-      <li class="breadcrumb-item"><a href="{{path('bikes_search', {'maker':ad.maker, 'model':ad.model})}}">{{ad.model}}</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{ad.label|title}}</li>
-    </ol>
-  </nav>
-  </div>
-
-      {% if ad.pictures[0] is defined %}
-  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    {% for i in range(1, ad.pictures|length) %}
-     <li data-target="#carouselExampleIndicators" data-slide-to="{{i}}" class="active"></li>
-{% endfor %}
-  </ol>
-
-  <div class="carousel-inner">
-    {% for picture in ad.pictures %}
-    <div class="carousel-item {% if ad.pictures[0] == picture %}active {% else %}
-        {% endif %}">
-      <img class="d-block w-100" src="{{ asset('images/')}}{{  picture }}" alt="{{picture}}">
-    </div>
-    {% endfor %} 
-   
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-{% else %}
-    <div class="col-8">
-        <img src="https://image.shutterstock.com/image-illustration/black-linear-photo-camera-logo-260nw-1412111903.jpg" alt="">
-    </div>
-{% endif %}
-        <hr>
-
-        <h3 class="adsection">Equipment</h3>
-        <div class="row">
-          {% for option in ad.equipment %}
-        <div class="col-2"><h6>{{option}}</h6></div>
-        {% endfor %}
-        </div>
-
-        <hr>
-     <h3 class="adsection">About</h3>
-
-     {{ad.about}}
-</div>
-<div class="col-sm-4 ">
-  
-  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-  <div class="fb-share-button" data-href="{{ app.request.uri }}" data-layout="box_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-
-          <hr>
-    <h3 class="adsection">Specs</h3>
+	<div class="row">
+		   <h3>My Google Maps Demo</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
     
 
-    <ul style="list-style: none;">
-        <li>Price:<strong> {{ad.price}}</strong> eur</li>
-        <li>Added: {{ad.added|date('d. M Y')}}</li>
-        <li>Year: {{ad.year}}</li>
-        <li>MIleage: {{ad.mileage}} Km</li>
-        <li>Volume: {{ad.volume}}</li>
-        <li>Power: {{ad.hp}} hp</li>
-        <li>Year: {{ad.year}}</li>
-    </ul>
-    <hr>
-    <h3 class="adsection">Contact</h3>
-    <ul>
-      <li>{{contact.username|title}}</li>
-      <li>{{contact.telephone}}</li> 
-      <li>{{contact.address|title}}</li> 
-    </ul>
-    {% if app.user.id is defined and app.user.id != ad.contact %} <a class="btn btn-secondary" 
-    href="{{ path('message.create', {'id': ad.id}) }}">Send Message <i class="far fa-envelope"></i></a>{% endif %}
-    {% if app.user.id is defined and app.user.id == ad.contact %}<a class="btn btn-warning" 
-    href="{{ path('bikes_edit', {'id': ad.id}) }}">Edit <i class="far fa-edit"></i></a>{% endif %}
-   
-        
-        
-         {% if app.user.id is defined %}
+		<div class="col-sm-8">
 
-           {% set foo = app.user.favorites|split(',') %}
+			<div>
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item">
+							<a href="{{path('ads_index')}}">
+								<i class="fas fa-home"></i>
+								Home</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a href="{{path('bikes_index')}}">Bikes</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a href="{{path('bikes_search', {'maker':ad.maker})}}">{{ad.maker}}</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a href="{{path('bikes_search', {'maker':ad.maker, 'model':ad.model})}}">{{ad.model}}</a>
+						</li>
+						<li class="breadcrumb-item active" aria-current="page">{{ad.label|title}}</li>
+					</ol>
+				</nav>
+			</div>
 
-             {% if favorites %}
-             <a class="btn btn-danger" 
-            href="{{ path('favoriteremove', {'vehicle':vehicle, 'id': ad.id}) }}">Remove From Favorites <i class="far fa-star-half"></i></a>
+			{% if ad.pictures[0] is defined %}
+				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+						{% for i in range(1, ad.pictures|length) %}
+							<li data-target="#carouselExampleIndicators" data-slide-to="{{i}}" class="active"></li>
+						{% endfor %}
+					</ol>
+
+					<div class="carousel-inner">
+						{% for picture in ad.pictures %}
+							<div class="carousel-item {% if ad.pictures[0] == picture %}active {% else %}
+									        {% endif %}">
+								<img class="d-block w-100" src="{{ asset('images/')}}{{ picture }}" alt="{{picture}}">
+							</div>
+						{% endfor %}
+
+					</div>
+					<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
+			{% else %}
+				<div class="col-8">
+					<img src="https://image.shutterstock.com/image-illustration/black-linear-photo-camera-logo-260nw-1412111903.jpg" alt="">
+				</div>
+			{% endif %}
+			<hr>
+
+			<h3 class="adsection">Equipment</h3>
+			<div class="row">
+				{% for option in ad.equipment %}
+					<div class="col-2">
+						<h6>{{option}}</h6>
+					</div>
+				{% endfor %}
+			</div>
+
+			<hr>
+			<h3 class="adsection">About</h3>
+
+			{{ad.about}}
+		</div>
+		<div class="col-sm-4 ">
+
+			<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+			<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+			<div class="fb-share-button" data-href="{{ app.request.uri }}" data-layout="box_count" data-size="small">
+				<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+			</div>
+
+			<hr>
+			<div class="col">
+				<div>
+					<h3 class="adsection">Specs</h3>
+				</div>
+				<div>
+					<h4 style="color:white; background-color:rgb(196, 38, 49)">Price:
+						{{ad.price}}
+						€</h4>
+				</div>
+			</div>
+
+			<ul style="list-style: none;">
+				<li>Price:<strong>
+						{{ad.price}}</strong>
+					eur</li>
+				<li>Added:
+					{{ad.added|date('d. M Y')}}</li>
+				<li>Year:
+					{{ad.year}}</li>
+				<li>MIleage:
+					{{ad.mileage}}
+					Km</li>
+				<li>Volume:
+					{{ad.volume}}</li>
+				<li>Power:
+					{{ad.hp}}
+					hp</li>
+				<li>Year:
+					{{ad.year}}</li>
+			</ul>
+			<hr>
+			<h3 class="adsection">Contact</h3>
+			<ul>
+				<li>{{contact.username|title}}</li>
+				<tel id="tel">
+					<button>Show telephone</button>
+				</tel>
+				<li>{{contact.address|title}}</li>
+			</ul>
+			{% if app.user.id is defined and app.user.id != ad.contact %}
+				<a class="btn btn-secondary" href="{{ path('message.create', {'id': ad.id}) }}">Send Message
+					<i class="far fa-envelope"></i>
+				</a>
+			{% endif %}
+			{% if app.user.id is defined and app.user.id == ad.contact %}
+				<a class="btn btn-warning" href="{{ path('bikes_edit', {'id': ad.id}) }}">Edit
+					<i class="far fa-edit"></i>
+				</a>
+			{% endif %}
+			{% if app.user.id is defined %}
+
+				{% set foo = app.user.favorites|split(',') %}
+
+				{% if favorites %}
+					<a class="btn btn-danger" href="{{ path('favoriteremove', {'vehicle':vehicle, 'id': ad.id}) }}">Remove From Favorites
+						<i class="far fa-star-half"></i>
+					</a>
+				{% else %}
+					<a class="btn btn-success" href="{{ path('favoriteadd', {'vehicle':vehicle, 'id': ad.id}) }}">Add To Favorites
+						<i class="far fa-star"></i>
+					</a>
+				{% endif %}
+			{% endif %}
 
 
-          {% else %}
+		</div>
+	</div>
 
-               <a class="btn btn-success" 
-               href="{{ path('favoriteadd', {'vehicle':vehicle, 'id': ad.id}) }}">Add To Favorites <i class="far fa-star"></i></a>
-          {% endif %}
-            {% endif %}
-
-
-</div>
-</div>
 {% endblock %}
+

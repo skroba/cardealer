@@ -1,88 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {% block stylesheets %}{% endblock %}
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> {% block stylesheets %}{% endblock %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> 
-    <link rel="shortcut icon" href="{{ asset('css//favicon.ico')}}">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet"> 
-  </head>
-  <body>
-    <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+		<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+		<link rel="shortcut icon" href="{{ asset('css//favicon.ico')}}">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div id="fb-root"></div>
+		<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
 
-  	<div class="container">
-      <div class="commercial">
-            <div class="levo"></div>
-            <div class="desno"></div>
-      </div>
+		<div class="container">
+			<div class="commercial">
+				<div class="levo"></div>
+				<div class="desno"></div>
+			</div>
 
 
-  		{% include './assets/navbar.html.twig' %}
-        {% block body %}{% endblock %}
-      {% include './assets/footer.html.twig' %}
-</div>
-        {% block javascripts %}{% endblock %}
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://kit.fontawesome.com/76e4368f06.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>    
-  <script>
-function getModels(val) {
-  $.ajax({
-  type: "GET",
-  url: "/cardealer/public/index.php/models/api/" +val,
-  data:'model='+val,
-  success: function(data){
-    $("#model").html(data);
+			{% include './assets/navbar.html.twig' %}
+			{% block body %}{% endblock %}
+			{% include './assets/footer.html.twig' %}
+		</div>
+		{% block javascripts %}{% endblock %}
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://kit.fontawesome.com/76e4368f06.js" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script>
+			function getModels(val) {
+$.ajax({
+type: "GET",
+url: "/cardealer/public/index.php/models/api/" + val,
+data: 'model=' + val,
+success: function (data) {
+$("#model").html(data);
 
-  }
-  });
 }
-</script>
-  <script>
-  $(document).ready(
-function () {
-  $.ajax({
-  type: "GET",
-  url: "/cardealer/public/index.php/api/messages/",
-  success: function(data){
-    console.log('test');
-    $("#messages").html(data);
-
-  }
-  });
+});
 }
-);
+		</script>
+		<script>
+			$(document).ready(function () {
+$.ajax({
+type: "GET",
+url: "/cardealer/public/index.php/api/messages/",
+success: function (data) {
+console.log('test');
+$("#messages").html(data);
 
-</script>
-<script type="text/javascript">
-$(function(){
-$('#ads_maker').change(function(){
+}
+});
+});
+		</script>
+		<script type="text/javascript">
+			$(function () {
+$('#ads_maker').change(function () {
 
-  var val =document.getElementById("ads_maker").value;  
-    console.log(val);
-  $.ajax({
-  type: "GET",
-  url: "/cardealer/public/index.php/models/api/" +val,
-  data:'model='+val,
-  success: function(data){
-    $("#ads_model").html(data);
+var val = document.getElementById("ads_maker").value;
+console.log(val);
+$.ajax({
+type: "GET",
+url: "/cardealer/public/index.php/models/api/" + val,
+data: 'model=' + val,
+success: function (data) {
+$("#ads_model").html(data);
 
-  }
-  });
+}
+});
 })
 });
-</script>
+		</script>
+		<script>
+			$(document).ready(function () {
+$("button").click(function () {
+$("#tel").html('<li><text>{% if contact is defined %}{{ contact.telephone }}{% endif %}</text></li>')
+});
+});
+		</script>
+<script>
+$(document).ready(function () {
+$.ajax({
+type: "GET",
+url: "https://maps.googleapis.com/maps/api/geocode/json?address=sabac&key=AIzaSyBg-u2EHcP9e1A_dg0zeRFkUNfmHLK2wXQ",
+success: function (data) {
+console.log(data.results[0].geometry.location);
 
-  </body>
+}
+function initMap() {
+	  alert(data);
+  // The location of Uluru
+  // var uluru = {lat: data.results[0].geometry.location.lat, lng: data.results[0].geometry.location.lng};
+  // // The map, centered at Uluru
+  // var map = new google.maps.Map(
+  //     document.getElementById('map'), {zoom: 4, center: uluru});
+  // // The marker, positioned at Uluru
+  // var marker = new google.maps.Marker({position: uluru, map: map});
+}
+});
+});
+</script>
+<script>
+
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBg-u2EHcP9e1A_dg0zeRFkUNfmHLK2wXQ&callback=initMap">
+    </script>
+
+	</body>
 </html>

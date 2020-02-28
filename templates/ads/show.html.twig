@@ -12,10 +12,10 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Ads{% endblock %}
+{% block title %}{{ad.maker}} {{ad.model}}{% endblock %}
 
 {% block body %}
-<div class="row">
+<div class="row searchitem-body">
     <div class="col-sm-8">
 
   <div>
@@ -73,7 +73,8 @@
 
           <hr>
           <div class="col"> <div><h3 class="adsection">Specs</h3></div>
-    <div > <h4 style="color:white; background-color:rgb(196, 38, 49)">Price: {{ad.price}}e</h4></div></div>
+    <div > <h4 style="color:white; background-color:rgb(196, 38, 49)">Price: {{ad.price}} €</h4></div>
+  </div>
    
     
 
@@ -93,7 +94,7 @@
     <h3 class="adsection">Contact</h3>
     <ul>
       <li>{{contact.username|title}}</li>
-      <li>{{contact.telephone}}</li> 
+      <tel id="tel"><button>Show telephone</button></tel> 
       <li>{{contact.address|title}}</li> 
     </ul>
     {% if app.user.id is defined and app.user.id != ad.contact %} <a class="btn btn-secondary" 
@@ -122,9 +123,9 @@
 
 </div>
 </div>
-<div class="row">
-   <hr>
-  <div class="col-lg-6">
+<hr>
+<div class="row searchitem-body">
+    <div class="col-lg-6">
     <h3 class="adsection">Equipment</h3>
         <div class="row">
           {% for option in ad.equipment %}
@@ -140,11 +141,9 @@
         {% endfor %}
         </div></div>
         
-
-     
   </div>
     <div class="row">
-    <div class="col">
+    <div class="col searchitem-body">
         <h3 class="adsection">About</h3>
 
      <p><pre>{{ad.about}}</pre></p>

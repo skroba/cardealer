@@ -94,7 +94,7 @@ class BikesController extends AbstractController {
 		return $this->render('bikes/search.html.twig', [
 			'count' => $ads,
 			'ads' => array_slice($ads, $pagination, 12),
-			'models' => $modelsRepository->findAll(),
+			'models' => $modelsRepository->findBy(['vehicle' => 'bike']),
 		]);
 	}
 
@@ -146,7 +146,7 @@ class BikesController extends AbstractController {
 			return $this->redirectToRoute('bikes_show', ['id' => $lastid]);
 		}
 
-		return $this->render('ads/new.html.twig', [
+		return $this->render('bikes/new.html.twig', [
 			'ad' => $ad,
 			'form' => $form->createView(),
 		]);
